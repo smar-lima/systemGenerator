@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  systemgeneratorbackend:
+    image: ${DOCKER_REGISTRY-}systemgeneratorbackend
+    build:
+      context: .
+      dockerfile: SystemGeneratorBackend/Dockerfile
+    depends_on:
+        - pdb
+    ports:
+        - '5000:5000'
+        - '5001:5001'
+
+  #webapp:
+  #  image: node:14.18.1-alpine
+  #  build:
+  #    context: .
+  #    dockerfile: chatbotwebapp/Dockerfile
+  #  depends_on:
+  #      - systemgeneratorbackend
+  #  ports:
+  #      - '3000:3000'
+
+  pdb:
+    image: postgres:alpine
+    container_name: postgres_db
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: SystemGeneratorDb
+    restart: always
+    volumes:
+          - db_volume:/var/lib/postgresql/data
+    ports:
+        - '5433:5432'
+
+volumes:
+  db_volume:

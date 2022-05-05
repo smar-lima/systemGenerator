@@ -12,7 +12,7 @@ RegisterService.ServiceInjection(builder.Services, builder.Configuration);
 builder.Services.AddScoped<PostgresContext>();
 
 builder.Services.AddEntityFrameworkNpgsql()
-             .AddDbContext<PostgresContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ChatDb"), x => x.MigrationsAssembly("Infrastructure")));
+             .AddDbContext<PostgresContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SystemGeneratorDb"), x => x.MigrationsAssembly("Infrastructure")));
 
 
 builder.Services.AddControllers();
@@ -21,6 +21,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// migrate any database changes on startup (includes initial db creation)
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<PostgresContext>();
+    dataContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
