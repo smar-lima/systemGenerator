@@ -16,11 +16,7 @@ namespace Application.Services
 
         public async Task<long> Post(PostProjectModel model)
         {
-            Project newProject = new Project()
-            {
-                Location = model.Location,
-                Name = model.Name,  
-            };
+            Project newProject = new Project(model.Name, model.Location);
 
             _projectRepository.Insert(newProject);
 
