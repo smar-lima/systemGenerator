@@ -2,7 +2,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from './routes';
 import { MenuLateral } from './shared/components';
 import { AppDrawerProvider, AppThemeProvider } from './shared/contexts';
-import Typography from '@mui/material/Typography';
+import { SnackbarProvider } from 'notistack';
 
 export const App = () => {
 	return (
@@ -11,7 +11,9 @@ export const App = () => {
 				<BrowserRouter>
 
 					<MenuLateral >
-						<AppRoutes />
+						<SnackbarProvider  maxSnack={3} autoHideDuration={5000}>
+							<AppRoutes />
+						</SnackbarProvider>
 					</MenuLateral>
 					
 				</BrowserRouter>

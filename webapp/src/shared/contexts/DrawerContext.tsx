@@ -1,17 +1,12 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 
 
-interface IDrawerOptions {
-	icon: any,
-    path: string,
-    label: string,
-}
 
 interface IDrowerContextData {
 	isDrawerOpen: boolean;
 	toogleDrawerOpen: () => void;
-    drawerOptions: IDrawerOptions[];
-    setDrawerOptions: (newDrawerOptions: IDrawerOptions[]) => void;
+    drawerOptions: any[];
+    setDrawerOptions: (newDrawerOptions: any[]) => void;
 }
 
 type DrawerProviderProps = {
@@ -28,7 +23,7 @@ export const useDrawerContext = () => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AppDrawerProvider: any = (props: DrawerProviderProps) => {
 
-	const [drawerOptions, setDrawerOptions] = useState<IDrawerOptions[]>([]);
+	const [drawerOptions, setDrawerOptions] = useState<any[]>([]);
 
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -36,7 +31,7 @@ export const AppDrawerProvider: any = (props: DrawerProviderProps) => {
 		setIsDrawerOpen(oldDrawerOpen => !oldDrawerOpen);
 	},[]);
 
-	const handleSetDrawerOptions = useCallback((newDrawerOptions: IDrawerOptions[]) => {
+	const handleSetDrawerOptions = useCallback((newDrawerOptions: any[]) => {
 		setDrawerOptions(newDrawerOptions);
 	},[]);
 

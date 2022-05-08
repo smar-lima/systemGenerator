@@ -1,5 +1,6 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { createTheme } from '@mui/material';
-import { green, yellow } from '@mui/material/colors';
+import { green, yellow, red } from '@mui/material/colors';
 
 export const LightTheme = createTheme({
 	palette: {
@@ -33,6 +34,64 @@ export const LightTheme = createTheme({
 			color: green[800],
 			fontWeight: 500
 		}
+	},
+	components: {
+		MuiFab:{
+			styleOverrides:{
+				root:{
+					background: green[700],
+					color: 'white',
+					'&:hover': {
+						background: 'white',
+						color: green[700],
+					 },
+				}
+			}
+		},
+		MuiIconButton:{
+			variants: [
+				{
+				  props: { color: 'primary' },
+				  style: {
+						background: green[600],
+						color: 'white',
+						'&:hover': {
+							background: green[800],
+							color: 'white',
+						 },
+				  },
+				},
+			]
+		},
+		MuiDivider:{
+			styleOverrides:{
+				root:{
+					background: green[500]
+				}
+			}
+		},
+		MuiListItemButton:{
+			styleOverrides:{
+				root:{
+					'&.Mui-selected': {
+						background: green[200],
+						color: 'black',
+						'&:hover': {
+							background: green[200],
+							color: 'black',
+						},
+					  },
+					'&:focus': {
+						background: green[200],
+						color: 'black',
+					},
+					'&:hover': {
+						background: green[200],
+						color: 'black',
+					},
+				}
+			}
+		},
 	}
 });
 

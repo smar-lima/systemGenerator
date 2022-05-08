@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useEffect, useState } from 'react';
-import { Autocomplete, Avatar, Drawer, ListItemButton, TextField, useMediaQuery, useTheme } from '@mui/material';
+import { Autocomplete, Avatar, Collapse, Drawer, Fab, ListItem, ListItemButton, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
@@ -11,15 +11,16 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {BarraSuperior} from '../barra-superior/BarraSuperior';
+import {BarraSuperior} from '../barra-superior/barraSuperior';
 import {useAppThemeContext, useDrawerContext} from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
-import  {MenuList}  from '../../../Menu';
+import  {MenuList}  from '../../../menu';
 import { SvgIconComponent } from '@mui/icons-material';
 import React from 'react';
-import { getTelasDoMenuRapido } from '../menu-rapido/MenuRapidoHelper';
+import { getTelasDoMenuRapido } from '../menu-rapido/menuRapidoHelper';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { grey, green } from '@mui/material/colors';
+import { grey, green, lightGreen } from '@mui/material/colors';
+import VoltarIcon from '@mui/icons-material/ArrowBack';
 
 const drawerWidth = 240;
 
@@ -47,7 +48,11 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({to, Icone, label, onClick})
 			<ListItemIcon>
 				<Icone/>
 			</ListItemIcon>
-			<ListItemText primary={label} />
+			<ListItemText>
+				<Typography whiteSpace={'nowrap'} textOverflow={'ellipsis'} overflow={'hidden'}>
+					{label}
+				</Typography>
+			</ListItemText>
 		</ListItemButton>
 	);
 };
@@ -55,6 +60,11 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({to, Icone, label, onClick})
 
 
 export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
+	
+	const [estado, setEstado] = useState<any>({});
+	const [menuSelecionado, setMenuSelecionado] = useState<any>({});
+	const [menuPaiSelecionado, setMenuPaiSelecionado] = useState<any>({});
+
 	const theme = useTheme();
 	
 	const { themeName } = useAppThemeContext();
@@ -122,9 +132,13 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 	
 
 	const onChangeMenu = async (item: any, item2: any) => {
-		console.log('item2',item2);
 		await navigate(item2.value);	
 		await toogleDrawerOpen();
+	};
+
+	const handleClick = (e: any) => {
+		setMenuPaiSelecionado(e.index);
+		setEstado({ [e.label]: !estado[e.label] });
 	};
 
 	return (
@@ -162,11 +176,15 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 								/>
 							}
 						</Box>
-						<IconButton onClick={toogleDrawerOpen} style={{background: themeName === 'light' ?  'none' : grey[800]}}>
-							{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-						</IconButton>
+						<Fab 
+							size="small" 
+							aria-label="add" 
+							onClick={toogleDrawerOpen}
+							style={{width: '25%', height: '20%', boxShadow: 'none'}}
+						>
+							<VoltarIcon/>
+						</Fab>
 					</DrawerHeader>
-
 					<GlobalHotKeys keyMap={hotKeysKeyMap} handlers={hotKeyshandlers}>
 						<Box
 							width='100%' 
@@ -202,21 +220,77 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 							)}
 						</Box>
 					</GlobalHotKeys>
-					
 					<Divider style={{marginTop: '15px', background: themeName === 'light' ?  green[100] : grey[400]}}/>
-
 					<Box flex={1}>
-
 						<List component={'nav'}>
-							{drawerOptions.map(drawerOption => (
-								<ListItemLink 
-									key={drawerOption.path}
-									to={drawerOption.path}
-									Icone={drawerOption.icon}
-									label={drawerOption.label}
-									onClick={smDown ? () => toogleDrawerOpen() : undefined}
-								/>
-							))}
+							{drawerOptions.map(drawerOption => {
+								return (
+									<div key={drawerOption.id}>
+										{drawerOption.items.map((item: any) => {
+											return (
+												<div key={item.id}>
+													{item.subitems != null ? (
+														<div key={item.id}>
+															 <ListItem
+																key={item.path}
+																onClick={handleClick.bind(
+																	this,
+																	item
+																)}
+															>
+																<ListItemText
+																	primary={item.label}
+																/>
+															</ListItem>
+															<Collapse
+																key={item.path}
+																component="li"
+																in={estado[item.label]}
+																timeout="auto"
+																unmountOnExit
+															>
+																<Divider/>
+																<Box key={item.id} style={
+																	themeName === 'light' ? 
+																		{background: grey[300]} :  
+																		{background: grey[700]}}
+																>
+																	<List disablePadding>
+																		{item.subitems.map(
+																			(sitem: any) => {
+																				console.log('sitem',sitem);
+																				return (
+																					<ListItemLink 
+																						key={sitem.path}
+																						to={sitem.path}
+																						Icone={sitem.icon}
+																						label={sitem.label}
+																						onClick={smDown ? () => toogleDrawerOpen() : undefined}
+																					/>
+																				);
+																			}
+																		)}
+																	</List>
+																</Box>
+																<Divider/>
+															</Collapse>
+														</div>
+													) :
+														(
+															<ListItemLink 
+																key={drawerOption.path}
+																to={drawerOption.path}
+																Icone={drawerOption.icon}
+																label={drawerOption.label}
+																onClick={smDown ? () => toogleDrawerOpen() : undefined}
+															/>
+														)}
+												</div>
+											);
+										})}
+									</div>
+								);
+							})}
 						</List>
 					</Box>
 				</Drawer>

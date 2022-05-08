@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
-import {MenuSimples} from '../menu-simples/MenuSimples';
+import {MenuSimples} from '../menu-simples/menuSimples';
 import { Grid } from '@mui/material';
 import { green } from '@mui/material/colors';
 
@@ -35,7 +35,7 @@ export const BarraSuperior = (props: { open: boolean | undefined,  handleDrawerO
 	}));
 
 	return (
-		<AppBar position="fixed" open={props.open} style={{background: green[800]}}>
+		<AppBar position="fixed" open={props.open} >
 			<Toolbar>
 				<Grid container direction="row">
 					<Grid item xs>

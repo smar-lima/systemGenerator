@@ -1,9 +1,6 @@
-import { Button } from '@mui/material';
-import { Navigate, Routes, Route } from 'react-router-dom';
-import { 
-	Dashboard,
-	PaginaInicial 
-} from '../pages';
+import { Routes, Route } from 'react-router-dom';
+import { Dashboard } from '../pages/dashboard/components/dashBoard';
+import { PaginaInicial } from '../pages/pagina-inicial/components/paginaInicial';
 
 export const AppRoutes = () => {
 

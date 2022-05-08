@@ -1,8 +1,8 @@
-import { Box, IconButton, Paper, TextField, Tooltip, useTheme } from '@mui/material';
+import { Box, IconButton, Paper, TextField, Tooltip, useTheme, Divider, Skeleton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { green } from '@mui/material/colors';
-import { useAppThemeContext } from '../../contexts';
+import SyncIcon from '@mui/icons-material/Sync';
 
+import { Environment } from '../../environment';
 interface IFerramentasDaListagemProps {
     textoDaBusca?: string;
     mostrarInputBusca?: boolean;
@@ -10,6 +10,9 @@ interface IFerramentasDaListagemProps {
 	textoBotaoNovo?: string;
 	mostrarBotaoNovo?: boolean;
 	aoClicarBotaoNovo?: () => void;
+	mostrarBotaoAtualizar?: boolean;
+	aoClicarBotaoAtualizar?: () => void;
+	loadingInicial?: true
 }
 
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
@@ -18,46 +21,81 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 	aoMudarTextoDeBusca,
 	textoBotaoNovo = 'Novo',
 	mostrarBotaoNovo = true,
-	aoClicarBotaoNovo
+	aoClicarBotaoNovo,
+	mostrarBotaoAtualizar = true,
+	aoClicarBotaoAtualizar,
+	loadingInicial = false
 }) => {
-	const { themeName } = useAppThemeContext();
 
 	const theme = useTheme();
 
 	return (
-		<Box 
-			gap={1} 
-			padding={2} 
-			paddingX={2} 
-			display='flex' 
-			alignItems={'center'} 
-			height={theme.spacing(2)} 
-			component={Paper}
-		>
-			{mostrarInputBusca && (
-				<Box width={'80%'}>
-					<TextField 
-						size='small'
-						value={textoDaBusca}
-						fullWidth
-						onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
-						placeholder='Pesquisar...'
-					/>
+		<>
+			{(!loadingInicial) && (
+				<Box 
+					gap={1}
+					padding={2}
+					paddingX={2}
+					display='flex'
+					alignItems={'center'}
+					height={theme.spacing(2)} 
+					component={Paper}
+				>
+					{mostrarInputBusca && (
+						<Box width={'80%'}>
+							<TextField 
+								size='small'
+								value={textoDaBusca}
+								fullWidth
+								onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
+								placeholder={Environment.INPUT_DE_BUSCA}
+							/>
+						</Box>
+					)}
+					<Box flex={1} display="flex" justifyContent="end">
+						{mostrarBotaoAtualizar && 
+							<>
+							
+								<Box display={'flex'}>
+									<Tooltip title={'Atualizar'}>
+										<IconButton
+											color="primary"
+											style={{padding: '2px'}}
+											onClick={aoClicarBotaoAtualizar}
+										>
+											<SyncIcon/>
+										</IconButton>
+									</Tooltip>
+									<Divider orientation='vertical' style={{marginLeft:'10px', marginRight: '10px'}}/>
+								</Box>
+							</>
+						}
+						{mostrarBotaoNovo && (
+							<Tooltip title={textoBotaoNovo}>
+								<IconButton
+									color="primary"
+									style={{padding: '2px'}}
+									onClick={aoClicarBotaoNovo}
+								>
+									<AddIcon/>
+								</IconButton>
+							</Tooltip>
+						)}
+					</Box>
 				</Box>
 			)}
-
-			<Box flex={1} display="flex" justifyContent="end">
-				{mostrarBotaoNovo && (
-					<Tooltip title={textoBotaoNovo}>
-						<IconButton
-							style={{background: green[700], color:'white', padding: '1px'}}
-							onClick={aoClicarBotaoNovo}
-						>
-							<AddIcon/>
-						</IconButton>
-					</Tooltip>
-				)}
-			</Box>
-		</Box>
+			{loadingInicial && (
+				<Box 
+					gap={1}
+					padding={2}
+					paddingX={2}
+					display='flex'
+					alignItems={'center'}
+					height={theme.spacing(2)} 
+				>
+					<Skeleton width={'100%'} height={'80px'} />
+				</Box>
+			)}
+		</>
 	);
 };
