@@ -8,9 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["SystemGeneratorBackend/SystemGeneratorBackend.csproj", "SystemGeneratorBackend/"]
-COPY ["Application/Application.csproj", "Application/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-COPY ["Domain/Domain.csproj", "Domain/"]
 RUN dotnet restore "SystemGeneratorBackend/SystemGeneratorBackend.csproj"
 COPY . .
 WORKDIR "/src/SystemGeneratorBackend"
