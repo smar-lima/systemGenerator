@@ -1,26 +1,23 @@
-/* eslint-disable prefer-const */
-/* eslint-disable no-mixed-spaces-and-tabs */
 import { useEffect, useState } from 'react';
 import { Autocomplete, Avatar, Collapse, Drawer, Fab, ListItem, ListItemButton, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {BarraSuperior} from '../barra-superior/barraSuperior';
+import {BarraSuperior} from '../barra-superior/barraSuperior.component';
 import {useAppThemeContext, useDrawerContext} from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import  {MenuList}  from '../../../menu';
 import { SvgIconComponent } from '@mui/icons-material';
 import React from 'react';
-import { getTelasDoMenuRapido } from '../menu-rapido/menuRapidoHelper';
+import { getTelasDoMenuRapido } from '../menu-rapido/menuRapido.component';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { grey, green, lightGreen } from '@mui/material/colors';
+import { grey, green } from '@mui/material/colors';
 import VoltarIcon from '@mui/icons-material/ArrowBack';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 
 const drawerWidth = 240;
 
@@ -44,12 +41,18 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({to, Icone, label, onClick})
 	};
 
 	return (
-		<ListItemButton selected={!!match} key={label} onClick={handleClick}>
+		<ListItemButton className='customBg' selected={!!match} key={label} onClick={handleClick}>
 			<ListItemIcon>
 				<Icone/>
 			</ListItemIcon>
 			<ListItemText>
-				<Typography whiteSpace={'nowrap'} textOverflow={'ellipsis'} overflow={'hidden'}>
+				<Typography 
+					variant={'subtitle2'}
+					whiteSpace={'nowrap'} 
+					textOverflow={'ellipsis'} 
+					overflow={'hidden'}
+					fontWeight={500} 
+				>
 					{label}
 				</Typography>
 			</ListItemText>
@@ -63,7 +66,7 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 	
 	const [estado, setEstado] = useState<any>({});
 	const [menuSelecionado, setMenuSelecionado] = useState<any>({});
-	const [menuPaiSelecionado, setMenuPaiSelecionado] = useState<any>({});
+	const [menuPaiSelecionado, setMenuPaiSelecionado] = useState<any | null>({});
 
 	const theme = useTheme();
 	
@@ -75,13 +78,13 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 
 	const navigate = useNavigate();
 
-	let hotKeysKeyMap = {
+	const hotKeysKeyMap = {
 		MENU_RAPIDO: 'ctrl+m',
 	};
 
-	let menuRapidoRef: any = React.createRef();
+	const menuRapidoRef: any = React.createRef();
 	
-	let telasDoMenuRapido = getTelasDoMenuRapido(drawerOptions);
+	const telasDoMenuRapido = getTelasDoMenuRapido(drawerOptions);
 
 	const [telaAtual] = useState(undefined);
 
@@ -90,7 +93,7 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 		await menuRapidoRef.current?.focus();
 	};
 
-	let hotKeyshandlers = {
+	const hotKeyshandlers = {
 		MENU_RAPIDO: acessarMenuRapido
 	};
 
@@ -139,6 +142,17 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 	const handleClick = (e: any) => {
 		setMenuPaiSelecionado(e.index);
 		setEstado({ [e.label]: !estado[e.label] });
+	};
+
+	const onClickSimpleMenu = () => {
+		if(smDown){
+			toogleDrawerOpen();
+			setEstado({});
+			setMenuPaiSelecionado(null);
+		}else {
+			setEstado({}),
+			setMenuPaiSelecionado(undefined);
+		}
 	};
 
 	return (
@@ -231,16 +245,37 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 												<div key={item.id}>
 													{item.subitems != null ? (
 														<div key={item.id}>
-															 <ListItem
+															<ListItem
+																style={menuPaiSelecionado === item?.index && themeName === 'light' ? 
+																	{ border: '2px ridge ', borderColor: green[300]} :
+																	menuPaiSelecionado === item?.index && themeName === 'dark' ?
+																		{ border: '2px ridge ', borderColor: grey[500]} : {}
+																}
 																key={item.path}
 																onClick={handleClick.bind(
 																	this,
 																	item
 																)}
 															>
-																<ListItemText
-																	primary={item.label}
-																/>
+																<ListItemIcon>
+																	{
+																		estado[item.label] ?
+																			<KeyboardArrowDown/> :
+																			<KeyboardArrowRight/>
+																	}
+																</ListItemIcon>
+																<Typography 
+																	color={
+																		themeName === 'dark' ?
+																			grey[200] : grey[600]
+																	}
+																	fontWeight={500} 
+																	whiteSpace={'nowrap'} 
+																	textOverflow={'ellipsis'} 
+																	overflow={'hidden'}
+																>
+																	{item.label}
+																</Typography>
 															</ListItem>
 															<Collapse
 																key={item.path}
@@ -249,16 +284,14 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 																timeout="auto"
 																unmountOnExit
 															>
-																<Divider/>
 																<Box key={item.id} style={
 																	themeName === 'light' ? 
-																		{background: grey[300]} :  
-																		{background: grey[700]}}
+																		{background: grey[200]} :  
+																		{background: grey[500]}}
 																>
 																	<List disablePadding>
 																		{item.subitems.map(
 																			(sitem: any) => {
-																				console.log('sitem',sitem);
 																				return (
 																					<ListItemLink 
 																						key={sitem.path}
@@ -278,11 +311,11 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 													) :
 														(
 															<ListItemLink 
-																key={drawerOption.path}
-																to={drawerOption.path}
-																Icone={drawerOption.icon}
-																label={drawerOption.label}
-																onClick={smDown ? () => toogleDrawerOpen() : undefined}
+																key={item.path}
+																to={item.path}
+																Icone={item.icon}
+																label={item.label}
+																onClick={() => onClickSimpleMenu()}
 															/>
 														)}
 												</div>

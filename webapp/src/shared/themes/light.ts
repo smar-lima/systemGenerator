@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { createTheme } from '@mui/material';
-import { green, yellow, red } from '@mui/material/colors';
+import { green, yellow, grey } from '@mui/material/colors';
+import { fontWeight } from '@mui/system';
 
 export const LightTheme = createTheme({
 	palette: {
@@ -11,9 +12,9 @@ export const LightTheme = createTheme({
 			contrastText: '#ffffff',
 		},
 		secondary:{
-			main: yellow[700],
-			dark: yellow[800],
-			light: yellow[500],
+			main: grey[700],
+			dark: grey[800],
+			light: grey[500],
 			contrastText: '#ffffff'
 		},
 		background:{
@@ -33,7 +34,7 @@ export const LightTheme = createTheme({
 		h6:{
 			color: green[800],
 			fontWeight: 500
-		}
+		},
 	},
 	components: {
 		MuiFab:{
@@ -73,25 +74,28 @@ export const LightTheme = createTheme({
 		MuiListItemButton:{
 			styleOverrides:{
 				root:{
+					fontWeight: 300,
+					color: grey[600],
 					'&.Mui-selected': {
-						background: green[200],
-						color: 'black',
+						fontWeight: 200,
+						background: green[100],
 						'&:hover': {
 							background: green[200],
-							color: 'black',
+							color: grey[600]
 						},
 					  },
 					'&:focus': {
-						background: green[200],
-						color: 'black',
+						fontWeight: 200,
+						background: green[100],
+						color: grey[600]
 					},
 					'&:hover': {
+						fontWeight: 200,
 						background: green[200],
-						color: 'black',
+						color: grey[600]
 					},
 				}
 			}
 		},
 	}
 });
-

@@ -1,4 +1,3 @@
-import { SignalCellularAltRounded } from '@mui/icons-material';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -16,7 +15,7 @@ export const slice = createSlice({
 				payload
 			};
 		},
-		resetPessoa(state) {
+		resetPessoa() {
 			return initialState;
 		}
 	}

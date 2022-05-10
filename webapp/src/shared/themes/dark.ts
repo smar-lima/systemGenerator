@@ -7,15 +7,15 @@ export const DarkTheme = createTheme({
 	palette: {
 		mode: 'dark',
 		primary:{
-			main: green[300],
-			dark: green[800],
-			light: green[200],
-			contrastText: '#ffffff',
+			main: grey[300],
+			dark: grey[700],
+			light: grey[200],
+			contrastText: green[800],
 		},
 		secondary:{
-			main: yellow[700],
-			dark: yellow[800],
-			light: yellow[500],
+			main: grey[700],
+			dark: grey[800],
+			light: grey[500],
 			contrastText: '#ffffff',
 		},
 		background:{
@@ -92,20 +92,22 @@ export const DarkTheme = createTheme({
 		MuiListItemButton:{
 			styleOverrides:{
 				root:{
+					fontWeight: 300,
+					color: grey[600],
 					'&.Mui-selected': {
-						background: green[800],
+						background: green[300],
 						color: 'black',
 						'&:hover': {
-							background: green[800],
+							background: green[400],
 							color: 'black',
 						},
 					  },
 					'&:focus': {
-						background: green[800],
+						background: green[300],
 						color: 'black',
 					},
 					'&:hover': {
-						background: green[800],
+						background: green[400],
 						color: 'black',
 					},
 				}

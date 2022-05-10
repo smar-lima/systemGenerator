@@ -12,12 +12,12 @@ interface IFerramentasDaListagemProps {
 	aoClicarBotaoNovo?: () => void;
 	mostrarBotaoAtualizar?: boolean;
 	aoClicarBotaoAtualizar?: () => void;
-	loadingInicial?: true
+	loadingInicial?: boolean
 }
 
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 	textoDaBusca = '',
-	mostrarInputBusca  = false,
+	mostrarInputBusca  = true,
 	aoMudarTextoDeBusca,
 	textoBotaoNovo = 'Novo',
 	mostrarBotaoNovo = true,

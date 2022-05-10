@@ -1,4 +1,4 @@
-import { LayoutBaseDePagina } from '../../../shared/layouts';
+import { PaginaFormLayout } from '../../../../shared/layouts';
 
 const propsBarraDetalhes = {
 	exibir: true,
@@ -13,14 +13,17 @@ const propsBarraDetalhes = {
 	aoClicarBotaoExcluir: () => console.log('click Excluir'),
 };
 
+const prefix = 'I';
+
 export const Dashboard = () => {
 
 	return (
-		<LayoutBaseDePagina 
+		<PaginaFormLayout 
 			titulo='Dashboard'
 			propsBarraDetalhes={propsBarraDetalhes}
+			prefix={prefix}
 		>
             testando
-		</LayoutBaseDePagina>
+		</PaginaFormLayout>
 	);
 };
