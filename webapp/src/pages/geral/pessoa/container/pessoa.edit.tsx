@@ -12,7 +12,6 @@ type Props = {
 const prefix = 'E';
 
 export const PessoaEdit: React.FC<Props> = (props) => {
-	console.log('props form',props);
 
 	const [loading, setLoading] = useState(true);
 

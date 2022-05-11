@@ -12,7 +12,6 @@ type Props = {
 const prefix = 'I';
 
 export const PessoaNew: React.FC<Props> = (props) => {
-	console.log('props form',props);
 
 	const [loading, setLoading] = useState(true);
 

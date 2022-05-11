@@ -13,7 +13,6 @@ type Props = {
 const prefix = 'V';
 
 export const PessoaView: React.FC<Props> = (props) => {
-	console.log('props form',props);
 
 	const [loading, setLoading] = useState(true);
 
