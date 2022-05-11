@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PaginaFormLayout } from '../../../../shared/layouts';
 
-
 type Props = {
 	titulo?: string,
 	children: React.ReactNode;

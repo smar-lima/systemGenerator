@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 import { PaginaListagemLayout } from '../../../../shared/layouts';
 
-
 type Props = {
 	titulo?: string,
 	children: React.ReactNode;
 	loadingInicial?: boolean;
 	ocultarBarraFerramentas?: boolean,
 	propsBarraFerramentas?: any;
-  };
-
+};
 
 export const CidadeList: React.FC<Props> = (props) => {
-	console.log('props listagem',props);
 
 	const [loading, setLoading] = useState(true);
 

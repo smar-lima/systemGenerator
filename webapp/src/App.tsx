@@ -6,7 +6,6 @@ import { SnackbarProvider } from 'notistack';
 import { Router } from './routes/index.route';
 
 export const App = () => {
-
 	return (
 		<AppThemeProvider>
 			<AppDrawerProvider>

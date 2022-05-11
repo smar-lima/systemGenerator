@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	id: undefined,
-	Nome: '',
+	id: 1,
+	Nome: 'ttt',
 };
 
 export const slice = createSlice({
 	name: 'pessoa',
 	initialState: initialState,
 	reducers:{
-		updatePessoa(state, {payload}) {
+		setPessoa(state, {payload}) {
 			return {
 				...state, 
-				payload
+				...payload
 			};
 		},
 		resetPessoa() {
@@ -22,10 +22,10 @@ export const slice = createSlice({
 });
 
 export const {
-	updatePessoa,
+	setPessoa,
 	resetPessoa
 } = slice.actions;
 
-export const selectPessoa = (state: any) => state.user;
+export const selectPessoa = (state: any) => state.pessoa;
 
 export default slice.reducer;
