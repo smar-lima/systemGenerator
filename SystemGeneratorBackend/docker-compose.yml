@@ -9,8 +9,8 @@ services:
     depends_on:
         - pdb
     ports:
-        - '5000:5000'
-        - '5001:5001'
+        - '5533:5533'
+        - '5534:5534'
 
   #webapp:
   #  image: node:14.18.1-alpine

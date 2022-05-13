@@ -5,8 +5,11 @@ namespace Application.Services.Interfaces
 {
     public interface IProjectService
     {
-        Task<long> Post(PostProjectModel model);
+        Task<Project> Post(PostPutProjectModel model);
 
         Task<Project> Get(long id);
+
+        Task<Project> Put(long id, PostPutProjectModel model);
+        Task Delete(long id);
     }
 }

@@ -4,10 +4,10 @@ services:
   systemgeneratorbackend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:5533;http://+:5534
     ports:
-      - "80"
-      - "443"
+      - "5533"
+      - "5534"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

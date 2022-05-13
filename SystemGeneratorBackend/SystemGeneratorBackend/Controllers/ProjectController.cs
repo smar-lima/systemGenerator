@@ -17,10 +17,10 @@ namespace SystemGeneratorBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index([FromBody] PostProjectModel model)
+        public async Task<IActionResult> Index([FromBody] PostPutProjectModel model)
         {
             var result = await _projectService.Post(model);
-            return Ok(result);
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
 
@@ -30,6 +30,20 @@ namespace SystemGeneratorBackend.Controllers
         {
             var result = await _projectService.Get(id);
             return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] long id, [FromBody] PostPutProjectModel model)
+        {
+            var result = await _projectService.Put(id, model);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] long id)
+        {
+            await _projectService.Delete(id);
+            return NoContent();
         }
     }
 }
