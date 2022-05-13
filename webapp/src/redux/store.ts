@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+//importa todos os arquivos Slices
 import { slices } from '../shared/imports';
  
 const makeSlice = () => {
 	const refactReducers: any = [];
+	//retira todos os slices dos componentes importados
 	slices.keys().forEach((Name:string) => {
 		const module = slices(Name);
 		const reducer = slices(Name).default;
@@ -13,9 +15,9 @@ const makeSlice = () => {
 			}
 		);
 	});
-
+	
+	//Remonta o objeto com todos os Slices(reducers) para store
 	const keys = Object.keys(refactReducers);
-
 	const newReducers: any = {};
 
 	for (let i = 0; i < keys.length; i++) {

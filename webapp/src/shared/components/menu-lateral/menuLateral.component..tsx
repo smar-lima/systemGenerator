@@ -244,12 +244,12 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 											return (
 												<div key={item.id}>
 													{item.subitems != null ? (
-														<div key={item.id}>
+														<div key={item.id} style={{cursor:'pointer'}}>
 															<ListItem
 																style={menuPaiSelecionado === item?.index && themeName === 'light' ? 
-																	{ border: '2px ridge ', borderColor: green[300]} :
+																	{ border: '2px ridge ', borderColor: green[300], cursor: 'pointer'} :
 																	menuPaiSelecionado === item?.index && themeName === 'dark' ?
-																		{ border: '2px ridge ', borderColor: grey[500]} : {}
+																		{ border: '2px ridge ', borderColor: grey[500], cursor: 'pointer'} : {}
 																}
 																key={item.path}
 																onClick={handleClick.bind(

@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CidadeList } from '../container/cidade.list';
+import { Table } from '../../../../shared/components/table/table';
+import GridCidadeDDados from '../cidade.table.ddados';
 
 export const CidadeGrid: React.FC = () => {
 
@@ -19,11 +21,18 @@ export const CidadeGrid: React.FC = () => {
 		propsBarraFerramentas
 	};
 
+	const gridProps = {
+		DDadosGrid: GridCidadeDDados,
+		multSelect: true
+	};
+
 	return (
 		<CidadeList
 			{...props}
 		>
-			<h1>Grid aqui</h1>
+			<Table 
+				{...gridProps}
+			/>
 		</CidadeList>
 	);
 };

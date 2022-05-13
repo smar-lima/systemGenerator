@@ -35,15 +35,15 @@ export const DarkTheme = createTheme({
 		},
 		h4:{
 			color: 'white',
-			fontWeight: 500
+			fontWeight: 700
 		},
 		h5:{
 			color: 'white',
-			fontWeight: 500
+			fontWeight: 700
 		},
 		h6:{
 			color: 'white',
-			fontWeight: 500
+			fontWeight: 700
 		}
 	},
 	components: {
@@ -63,7 +63,11 @@ export const DarkTheme = createTheme({
 			styleOverrides:{
 				root:{
 					background: grey[200],
-					color: green[700]
+					color: green[700],
+					'&.MuiTablePagination-toolbar':{
+						background: grey[800],
+						color: 'white'
+					},
 				}
 			}
 		},
@@ -115,4 +119,3 @@ export const DarkTheme = createTheme({
 		},
 	}
 });
-

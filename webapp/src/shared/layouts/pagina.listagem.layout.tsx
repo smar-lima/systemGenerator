@@ -48,7 +48,7 @@ export const PaginaListagemLayout: React.FC<IPaginaListagemLayout> = ({
 							whiteSpace="nowrap"
 							overflow="hidden"
 							textOverflow="ellipsis"
-							variant={smDown ? 'h6' : mdDown ? 'h5' : 'h4'}
+							variant={smDown ? 'h6' : mdDown ? 'h6' : 'h5'}
 						>
 							{'Listagem de ' + titulo}
 							{/*loadingInicial ? 

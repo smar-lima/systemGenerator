@@ -1,4 +1,9 @@
-export {};
+import { GridColDef } from '@mui/x-data-grid';
+export interface GridDDados {
+    order: any[];
+    filterInit: any[];
+    columns: GridColDef[];
+}
 //Modelos
 /*export interface DDadosType {
     Titulo: string;

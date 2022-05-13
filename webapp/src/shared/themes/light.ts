@@ -25,15 +25,15 @@ export const LightTheme = createTheme({
 	typography:{
 		h4:{
 			color: green[800],
-			fontWeight: 500
+			fontWeight: 700
 		},
 		h5:{
 			color: green[800],
-			fontWeight: 500
+			fontWeight: 700
 		},
 		h6:{
 			color: green[800],
-			fontWeight: 500
+			fontWeight: 700
 		},
 	},
 	components: {

@@ -50,7 +50,7 @@ export const PaginaFormLayout: React.FC<LayoutBaseDePaginaProps> = ({
 							whiteSpace="nowrap"
 							overflow="hidden"
 							textOverflow="ellipsis"
-							variant={smDown ? 'h6' : mdDown ? 'h5' : 'h4'}
+							variant={smDown ? 'h6' : mdDown ? 'h6' : 'h5'}
 						>
 							{(prefixUniform === 'I' ? 'Cadastro de ' : prefixUniform === 'E' ? 'Edição de ' : 'Visualização de ') + 
 								titulo
