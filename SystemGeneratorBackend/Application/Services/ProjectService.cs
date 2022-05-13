@@ -19,7 +19,7 @@ namespace Application.Services
 
         public async Task<long> Post(PostProjectModel model)
         {
-            ValidateProject(model.Name, model.Location);
+            //ValidateProject(model.Name, model.Location);
 
             Project newProject = new Project(model.Name, model.Location);
 
@@ -35,13 +35,13 @@ namespace Application.Services
 
             return project;
         }
-        private async void ValidateProject(string name, string location)
+        /*private async void ValidateProject(string name, string location)
         {
             var existingProject = await (from projects in _projectRepository.GetAllReadOnly()
                                          where projects.Name == name || projects.Location == location
                                          select projects).ToListAsync();
 
             if (existingProject != null) throw new HttpStatusException(HttpStatusCode.BadRequest, "Project name or location already exists!");
-        }
+        }*/
     }
 }
