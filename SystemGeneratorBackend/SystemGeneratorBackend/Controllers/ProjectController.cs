@@ -1,4 +1,5 @@
 ﻿using Application.Services.Interfaces;
+using Domain.Entities;
 using Domain.Models.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,15 @@ namespace SystemGeneratorBackend.Controllers
         {
             var result = await _projectService.Post(model);
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
+        }
+
+
+        [HttpGet]
+        //[Authorize]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _projectService.GetAll();
+            return Ok(result);
         }
 
 

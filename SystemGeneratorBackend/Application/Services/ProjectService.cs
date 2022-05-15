@@ -27,7 +27,12 @@ namespace Application.Services
 
             return newProject;
         }
+        public async Task<List<Project>> GetAll()
+        {
+            var projects = _projectRepository.GetAllReadOnly().ToList();
 
+            return projects;
+        }
 
         public async Task<Project> Get(long id)
         {

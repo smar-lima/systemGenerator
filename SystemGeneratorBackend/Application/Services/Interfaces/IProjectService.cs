@@ -8,6 +8,7 @@ namespace Application.Services.Interfaces
         Task<Project> Post(PostPutProjectModel model);
 
         Task<Project> Get(long id);
+        Task<List<Project>> GetAll();
 
         Task<Project> Put(long id, PostPutProjectModel model);
         Task Delete(long id);
