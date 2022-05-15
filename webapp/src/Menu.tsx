@@ -1,6 +1,7 @@
 import HomeIcon from '@mui/icons-material/Home';
 import CidadeIcon from '@mui/icons-material/LocationCity';
 import PersonIcon from '@mui/icons-material/Person';
+import ProjectIcon from '@mui/icons-material/SettingsSystemDaydream';
 
 const base = '/app';
 
@@ -38,6 +39,13 @@ export const MenuList = [
 						path: '/app/geral/pessoa',
 						icon: PersonIcon,
 						label: 'Pessoa',
+					},
+					{
+						id: 2,
+						index: 4,
+						path: '/app/geral/projeto',
+						icon: ProjectIcon,
+						label: 'Projeto',
 					},
 				],
 			},

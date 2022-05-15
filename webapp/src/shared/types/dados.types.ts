@@ -1,7 +1,7 @@
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridFilterItem, GridSortModel } from '@mui/x-data-grid';
 export interface GridDDados {
-    order: any[];
-    filterInit: any[];
+    order: GridSortModel;
+    filterInit: GridFilterItem[];
     columns: GridColDef[];
 }
 //Modelos

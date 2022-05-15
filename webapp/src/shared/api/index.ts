@@ -6,7 +6,7 @@ import { responseInterceptor, errorInterceptor, requestInterceptor } from './int
 const Api = axios.create({
 	baseURL: Environment.URL_BASE,
 });
-
+/*
 Api.interceptors.request.use(
 	(config) => requestInterceptor(config),
 	(error) => errorInterceptor(error)
@@ -16,5 +16,5 @@ Api.interceptors.response.use(
 	(response) => responseInterceptor(response),
 	(error) => errorInterceptor(error)
 );
-
+*/
 export default Api;

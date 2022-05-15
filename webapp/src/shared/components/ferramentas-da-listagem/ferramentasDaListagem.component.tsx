@@ -15,6 +15,18 @@ interface IFerramentasDaListagemProps {
 	loadingInicial?: boolean
 }
 
+interface IBotaoBarraListagem {
+    label?: string;
+    onClick?:  (a: any) => void;
+    route?: string;
+	icon?: string;
+	mostrarBotaoNovo?: boolean;
+	aoClicarBotaoNovo?: () => void;
+	mostrarBotaoAtualizar?: boolean;
+	aoClicarBotaoAtualizar?: () => void;
+	loadingInicial?: boolean
+}
+
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 	textoDaBusca = '',
 	mostrarInputBusca  = true,
@@ -31,71 +43,60 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 
 	return (
 		<>
-			{(!loadingInicial) && (
-				<Box 
-					gap={1}
-					padding={2}
-					paddingX={2}
-					display='flex'
-					alignItems={'center'}
-					height={theme.spacing(2)} 
-					component={Paper}
-				>
-					{mostrarInputBusca && (
-						<Box width={'80%'}>
-							<TextField 
-								size='small'
-								value={textoDaBusca}
-								fullWidth
-								onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
-								placeholder={Environment.INPUT_DE_BUSCA}
-							/>
-						</Box>
+			<Box 
+				gap={1}
+				padding={2}
+				paddingX={2}
+				display='flex'
+				alignItems={'center'}
+				height={theme.spacing(2)} 
+			>
+				<Box flex={1} display="flex" justifyContent="end">
+					{!loadingInicial && mostrarBotaoAtualizar && 
+						<>
+						
+							<Box display={'flex'}>
+								<Tooltip title={'Atualizar'}>
+									<IconButton
+										color="primary"
+										style={{padding: '2px'}}
+										onClick={aoClicarBotaoAtualizar}
+									>
+										<SyncIcon/>
+									</IconButton>
+								</Tooltip>
+								<Divider orientation='vertical' style={{marginLeft:'10px', marginRight: '10px'}}/>
+							</Box>
+						</>
+					}
+					{loadingInicial && (
+						<>
+							<Box display={'flex'}>
+								<Skeleton width={'40px'} style={{padding: '0,2px'}} height={'40px'} variant="circular"/>
+								<Divider orientation='vertical' style={{marginLeft:'10px', marginRight: '10px'}}/>
+							</Box>
+						</>
 					)}
-					<Box flex={1} display="flex" justifyContent="end">
-						{mostrarBotaoAtualizar && 
-							<>
-							
-								<Box display={'flex'}>
-									<Tooltip title={'Atualizar'}>
-										<IconButton
-											color="primary"
-											style={{padding: '2px'}}
-											onClick={aoClicarBotaoAtualizar}
-										>
-											<SyncIcon/>
-										</IconButton>
-									</Tooltip>
-									<Divider orientation='vertical' style={{marginLeft:'10px', marginRight: '10px'}}/>
-								</Box>
-							</>
-						}
-						{mostrarBotaoNovo && (
-							<Tooltip title={textoBotaoNovo}>
-								<IconButton
-									color="primary"
-									style={{padding: '2px'}}
-									onClick={aoClicarBotaoNovo}
-								>
-									<AddIcon/>
-								</IconButton>
-							</Tooltip>
-						)}
-					</Box>
+					{!loadingInicial && mostrarBotaoNovo && (
+						<Tooltip title={textoBotaoNovo}>
+							<IconButton
+								color="primary"
+								style={{padding: '2px'}}
+								onClick={aoClicarBotaoNovo}
+							>
+								<AddIcon/>
+							</IconButton>
+						</Tooltip>
+					)}
+					{loadingInicial && (
+						<>
+							<Box display={'flex'}>
+								<Skeleton width={'40px'} style={{padding: '0,2px'}} height={'40px'} variant="circular"/>
+							</Box>
+						</>
+					)}
 				</Box>
-			)}
-			{loadingInicial && (
-				<Box 
-					gap={1}
-					padding={2}
-					paddingX={2}
-					display='flex'
-					alignItems={'center'}
-					height={theme.spacing(2)} 
-				>
-					<Skeleton width={'100%'} height={'80px'} />
-				</Box>
-			)}
+			</Box>
 		</>
 	);
 };

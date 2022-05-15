@@ -1,32 +1,33 @@
 import { useNavigate } from 'react-router-dom';
-import { CidadeList } from '../container/cidade.list';
+import { SistemaList } from '../container/sistema.list';
 import Table from '../../../../shared/components/table/table';
-import GridCidadeDDados from '../cidade.table.ddados';
+import GridSistemaDDados from '../sistema.table.ddados';
+import api from '../service/sistema.api';
 
-export const CidadeGrid: React.FC = () => {
+export const SistemaGrid: React.FC = () => {
 
 	const navigate = useNavigate();
 
 	const propsBarraFerramentas = {
 		aoMudarTextoDeBusca: () => console.log('buscar'),
 		textoBotaoNovo: 'Novo Item',
-		aoClicarBotaoNovo: () => navigate('/app/geral/cidade/add'),
+		aoClicarBotaoNovo: () => navigate('/app/geral/sistema/add'),
 		aoClicarBotaoAtualizar: () => console.log('Clicado Atulizar')
 	};
 
-	const api = {};
-
 	const props = {
-		titulo: 'Cidades',
+		titulo: 'Sistemas',
 		loadingInicial: false,
 		ocultarBarraFerramentas: false,
 		propsBarraFerramentas
 	};
 
 	const gridProps = {
-		gridDDados: GridCidadeDDados,
+		gridDDados: GridSistemaDDados,
 		multSelect: true,
-		api
+		api,
+		titulo: 'Sistema',
+		loadingSkeleton: false
 	};
 
 	return (

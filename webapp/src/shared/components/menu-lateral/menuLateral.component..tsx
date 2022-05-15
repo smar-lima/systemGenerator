@@ -1,5 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Autocomplete, Avatar, Collapse, Drawer, Fab, ListItem, ListItemButton, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { 
+	Autocomplete, 
+	Avatar, 
+	Collapse, 
+	Drawer, 
+	Fab, 
+	ListItem, 
+	ListItemButton, 
+	TextField, 
+	Typography, 
+	useMediaQuery, 
+	useTheme 
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
 import Divider from '@mui/material/Divider';
@@ -8,7 +20,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import {BarraSuperior} from '../barra-superior/barraSuperior.component';
 import {useAppThemeContext, useDrawerContext} from '../../contexts';
-import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
+import { useMatch, useNavigate, useResolvedPath, useLocation } from 'react-router-dom';
 import  {MenuList}  from '../../../menu';
 import { SvgIconComponent } from '@mui/icons-material';
 import React from 'react';
@@ -20,7 +32,6 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 
 const drawerWidth = 240;
-
 interface IListItemLinkProps {
 	label: string;
 	Icone: SvgIconComponent ;
@@ -30,13 +41,14 @@ interface IListItemLinkProps {
 
 const ListItemLink: React.FC<IListItemLinkProps> = ({to, Icone, label, onClick}) => {
 
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	const resolvedPath = useResolvedPath(to);
 	const match = useMatch({path: resolvedPath.pathname, end: false});
 
 	const handleClick = () => {
-		navigate(to);
+		if(location.pathname !== to) navigate(to);
 		onClick?.();
 	};
 
@@ -60,12 +72,9 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({to, Icone, label, onClick})
 	);
 };
 
-
-
 export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 	
 	const [estado, setEstado] = useState<any>({});
-	const [menuSelecionado, setMenuSelecionado] = useState<any>({});
 	const [menuPaiSelecionado, setMenuPaiSelecionado] = useState<any | null>({});
 
 	const theme = useTheme();
@@ -104,47 +113,27 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 		}
 	},[isDrawerOpen]);
 
-	const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-		open?: boolean;
-	}>(({ theme, open }) => ({
-		flexGrow: 1,
-		padding: theme.spacing(3),
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		marginLeft: `-${drawerWidth}px`,
-		...((open || smDown) && {
-			transition: theme.transitions.create('margin', {
-				easing: theme.transitions.easing.easeOut,
-				duration: theme.transitions.duration.enteringScreen,
-			}),
-			marginLeft: 0,
-		}),
-	}));
-
 	const DrawerHeader = styled('div')(({ theme }) => ({
 		display: 'flex',
 		alignItems: 'center',
 		padding: theme.spacing(0, 1),
-		// necessary for content to be below app bar
 		...theme.mixins.toolbar,
 		justifyContent: 'flex-end',
 	}));
 
-	
-
 	const onChangeMenu = async (item: any, item2: any) => {
-		await navigate(item2.value);	
+		if(location.pathname !== item2.value) await navigate(item2.value);
 		await toogleDrawerOpen();
 	};
 
 	const handleClick = (e: any) => {
+		console.log('passou 12');
 		setMenuPaiSelecionado(e.index);
 		setEstado({ [e.label]: !estado[e.label] });
 	};
 
 	const onClickSimpleMenu = () => {
+		console.log('passou 13');
 		if(smDown){
 			toogleDrawerOpen();
 			setEstado({});
@@ -327,10 +316,13 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 						</List>
 					</Box>
 				</Drawer>
-				<Main open={isDrawerOpen}>
-					<DrawerHeader />
+				<Box 
+					paddingX={3} 
+					width={'100%'} 
+					style={{paddingTop: '5%', marginLeft: !isDrawerOpen ?`-${drawerWidth}px`: ''}}
+				>
 					{ children }
-				</Main>
+				</Box>
 			</Box>
 		</>
 	);

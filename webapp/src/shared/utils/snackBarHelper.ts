@@ -1,10 +1,22 @@
 import { VariantType, useSnackbar } from 'notistack';
 
+
 const { enqueueSnackbar } = useSnackbar();
 
-export default class SnackBarHelper {
+export const SnackBarSuccess = (mensagem: string) => {
+	const variant: VariantType = 'success';
+	enqueueSnackbar(mensagem, {variant});
+};
 
-	static success(mensagem: string) {
+export const SnackBarError = (mensagem: string) => {
+	const variant: VariantType = 'error';
+	enqueueSnackbar(mensagem, {variant});
+};
+
+/*export const SnackBarHelper = (mensagem: string) => {
+	const variant: VariantType = 'success';
+	enqueueSnackbar(mensagem, {variant});
+	/*static success(mensagem: string) {
 		const variant: VariantType = 'success';
 		enqueueSnackbar(mensagem, {variant});
 	}
@@ -26,5 +38,5 @@ export default class SnackBarHelper {
 
 	static default(mensagem: string, variant: VariantType) {
 		enqueueSnackbar(mensagem, {variant});
-	}
-}
+	}*/
+

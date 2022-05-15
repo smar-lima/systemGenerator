@@ -2,7 +2,7 @@ export const Environment = {
 	/**
      * Define a url base do projeto.
      */
-	URL_BASE: 'http://localhost:3333',
+	URL_BASE: 'https://localhost:5533/api',
 	/**
      * Define a quantidade de linhas a ser carregada por padrão na listagem.
      */
@@ -27,5 +27,9 @@ export const Environment = {
      * Define mensagem padrão quando a entidade é excluida com sucesso.
      */
 	EXCLUIDO_COM_SUCESSO: 'Excluido com sucesso.',
+	/**
+     * Define mensagem padrão quando a entidade é excluida com sucesso.
+     */
+	ERRO_AO_DELETAR: 'Ocorreu um erro ao tentar apagar '
 };
 

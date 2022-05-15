@@ -2,37 +2,37 @@
 import api from '../../../../shared/api';
 import { Environment } from '../../../../shared/environment';
 
-interface IListagemPessoa {
+interface IListagemSistema {
     id: number;
     nomeCompleto: string;
     email: string;
     cidadeId: number;
 }
 
-interface IPessoa {
+interface ISistema {
     id: number;
     nomeCompleto: string;
     email: string;
     cidadeId: number;
 }
 
-type IPessoasComTotalCount = {
-    data: IListagemPessoa[];
+type ISistemaComTotalCount = {
+    data: IListagemSistema[];
     totalCount: number;
 }
 
-const getAll = async (page = 1, filter = ''): Promise<IPessoasComTotalCount | Error> => {
+const getAll = async (page = 1, filter = ''): Promise<ISistemaComTotalCount | Error> => {
 	try {
-		const urlRelativa = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
+		//const urlRelativa = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
 
-		const { data, headers } = await api.get(urlRelativa);
+		//const { data, headers } = await api.get(urlRelativa);
 
-		if(data){
+		/*if(data){
 			return {
 				data,
 				totalCount: Number(headers['x-total-count'] || Environment.LIMITE_DE_LINHAS)
 			};
-		}
+		}*/
 
 		return new Error('Erro ao listar os registros.');
 
@@ -42,10 +42,10 @@ const getAll = async (page = 1, filter = ''): Promise<IPessoasComTotalCount | Er
 	}
 };
 
-const getById = async (id: number): Promise<IPessoa | Error> => {
+const getById = async (id: number): Promise<ISistema | Error> => {
 	try {
 
-		const { data } = await api.get(`/pessoa/${id}`);
+		const { data } = await api.get(`/sistema/${id}`);
 
 		if(data){
 			return data;
@@ -59,14 +59,14 @@ const getById = async (id: number): Promise<IPessoa | Error> => {
 	}
 };
 
-const create = async (dados: Omit<IPessoa, 'id'>): Promise<number | Error> => {
+const create = async (dados: Omit<ISistema, 'id'>): Promise<number | Error> => {
 	try {
 
-		const { data } = await api.post('/pessoa', dados);
+		/*const { data } = await api.post('/sistema', dados);
 
 		if(data){
 			return data;
-		}
+		}*/
 
 		return new Error('Erro ao criar registro.');
 
@@ -76,10 +76,10 @@ const create = async (dados: Omit<IPessoa, 'id'>): Promise<number | Error> => {
 	}
 };
 
-const update = async (id: number, dados: Omit<IPessoa, 'id'>): Promise<void | Error> => {
+const update = async (id: number, dados: Omit<ISistema, 'id'>): Promise<void | Error> => {
 	try {
 
-		await api.put(`/pessoa/${id}`, dados);
+		await api.put(`/sistema/${id}`, dados);
 
 	} catch (error) {
 		console.error(error);
@@ -90,11 +90,11 @@ const update = async (id: number, dados: Omit<IPessoa, 'id'>): Promise<void | Er
 const deleteById = async (id: number): Promise<void | Error> => {
 	try {
 
-		const { data } = await api.delete(`/pessoa/${id}`);
+		/*const { data } = await api.delete(`/pessoa/${id}`);
 
 		if(data){
 			return data;
-		}
+		}*/
 
 		return new Error('Erro ao deletar registro.');
 
@@ -104,7 +104,7 @@ const deleteById = async (id: number): Promise<void | Error> => {
 	}
 };
 
-export const PessoasService = {
+export const SistemaService = {
 	getAll,
 	getById,
 	create,

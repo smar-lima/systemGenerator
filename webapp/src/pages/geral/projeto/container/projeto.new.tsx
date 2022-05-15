@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { PaginaListagemLayout } from '../../../../shared/layouts';
+import { PaginaFormLayout } from '../../../../shared/layouts';
 
 type Props = {
 	titulo?: string,
 	children: React.ReactNode;
 	loadingInicial?: boolean;
-	ocultarBarraFerramentas?: boolean,
-	propsBarraFerramentas?: any;
+	propsBarraDetalhes?: any;
+    exibirBarraDetalhes?: boolean;
   };
 
-export const PessoaList: React.FC<Props> = (props) => {
+const prefix = 'I';
+
+export const ProjetoNew: React.FC<Props> = (props) => {
 
 	const [loading, setLoading] = useState(true);
 
@@ -21,13 +23,13 @@ export const PessoaList: React.FC<Props> = (props) => {
 	},[]);
 
 	return(
-		<PaginaListagemLayout 
+		<PaginaFormLayout 
 			titulo={props?.titulo}
-			ocultarBarraFerramentas={props?.ocultarBarraFerramentas}
-			propsBarraFerramentas={props?.propsBarraFerramentas}
+			propsBarraDetalhes={props?.propsBarraDetalhes}
 			loadingInicial={loading}
+			prefix={prefix}
 		>
 			{props.children}
-		</PaginaListagemLayout>
+		</PaginaFormLayout>
 	);
 };

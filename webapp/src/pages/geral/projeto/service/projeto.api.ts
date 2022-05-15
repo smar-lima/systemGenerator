@@ -1,13 +1,13 @@
 import service from '../../../../shared/api';
 
-const base = '/pessoa';
+const base = '/project';
 
 export default {
+	getAll() {
+		return service.get(`${base}`);
+	},
 	getById(id: any) {
 		return service.get(`${base}/${id}`);
-	},
-	getAll(param: any) {
-		return service.get(`${base}${param}`);
 	},
 	create(param: any) {
 		return service.post(`${base}`, param);

@@ -8,17 +8,15 @@ import { Router } from './routes/index.route';
 export const App = () => {
 	return (
 		<AppThemeProvider>
-			<AppDrawerProvider>
-				<BrowserRouter>
-
+			<BrowserRouter>
+				<AppDrawerProvider>
 					<MenuLateral >
 						<SnackbarProvider  maxSnack={3} autoHideDuration={5000}>
 							<Router />
 						</SnackbarProvider>
 					</MenuLateral>
-					
-				</BrowserRouter>
-			</AppDrawerProvider>
+				</AppDrawerProvider>
+			</BrowserRouter>
 		</AppThemeProvider>
 	);
 };

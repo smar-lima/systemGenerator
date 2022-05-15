@@ -6,26 +6,26 @@ const initialState = {
 };
 
 export const slice = createSlice({
-	name: 'pessoa',
+	name: 'sistema',
 	initialState: initialState,
 	reducers:{
-		setPessoa(state, {payload}) {
+		setSistema(state, {payload}) {
 			return {
 				...state, 
 				...payload
 			};
 		},
-		resetPessoa() {
+		resetSistema() {
 			return initialState;
 		}
 	}
 });
 
 export const {
-	setPessoa,
-	resetPessoa
+	setSistema,
+	resetSistema
 } = slice.actions;
 
-export const selectPessoa = (state: any) => state.pessoa;
+export const selectSistema = (state: any) => state.sistema;
 
 export default slice.reducer;

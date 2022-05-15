@@ -11,7 +11,7 @@ type Props = {
 
 const prefix = 'I';
 
-export const PessoaNew: React.FC<Props> = (props) => {
+export const SistemaNew: React.FC<Props> = (props) => {
 
 	const [loading, setLoading] = useState(true);
 
