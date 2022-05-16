@@ -117,5 +117,16 @@ export const DarkTheme = createTheme({
 				}
 			}
 		},
+		MuiPaper:{
+			styleOverrides:{
+				root:{
+					'&.MuiDialog-paper': {
+						border: '3px',
+						borderStyle: 'solid',
+						borderColor: grey[400]
+					},
+				}
+			}
+		}
 	}
 });

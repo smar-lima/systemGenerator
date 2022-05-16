@@ -10,7 +10,7 @@ interface IFerramentasDaListagemProps {
 	aoClicarBotaoNovo?: () => void;
 	mostrarBotaoAtualizar?: boolean;
 	aoClicarBotaoAtualizar?: () => void;
-	loadingInicial?: boolean
+	loading?: boolean
 }
 
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
@@ -19,7 +19,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 	aoClicarBotaoNovo,
 	mostrarBotaoAtualizar = true,
 	aoClicarBotaoAtualizar,
-	loadingInicial = false
+	loading = false
 }) => {
 
 	const theme = useTheme();
@@ -35,7 +35,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 				height={theme.spacing(2)} 
 			>
 				<Box flex={1} display="flex" justifyContent="end">
-					{!loadingInicial && mostrarBotaoAtualizar && 
+					{!loading && mostrarBotaoAtualizar && 
 						<>
 						
 							<Box display={'flex'}>
@@ -52,7 +52,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 							</Box>
 						</>
 					}
-					{loadingInicial && (
+					{loading && (
 						<>
 							<Box display={'flex'}>
 								<Skeleton width={'40px'} style={{padding: '0,2px'}} height={'40px'} variant="circular"/>
@@ -60,7 +60,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 							</Box>
 						</>
 					)}
-					{!loadingInicial && mostrarBotaoNovo && (
+					{!loading && mostrarBotaoNovo && (
 						<Tooltip title={textoBotaoNovo}>
 							<IconButton
 								color="primary"
@@ -71,7 +71,7 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 							</IconButton>
 						</Tooltip>
 					)}
-					{loadingInicial && (
+					{loading && (
 						<>
 							<Box display={'flex'}>
 								<Skeleton width={'40px'} style={{padding: '0,2px'}} height={'40px'} variant="circular"/>

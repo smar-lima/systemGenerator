@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(
 	props: TransitionProps & {
@@ -31,6 +31,7 @@ export default function AlertConfimModal(props: any) {
 				aria-describedby="alert-dialog-slide-description"
 			>
 				<DialogTitle>{'Atenção'}</DialogTitle>
+				<Divider variant={'middle'}/>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-slide-description">
 						<Typography>
@@ -39,8 +40,8 @@ export default function AlertConfimModal(props: any) {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => props.cancelModalDelete()}>Cancelar</Button>
-					<Button onClick={() => props.confirmModalDelete()}>Confirmar</Button>
+					<Button variant={'outlined'} onClick={() => props.cancelModalDelete()}>Cancelar</Button>
+					<Button  variant={'contained'} onClick={() => props.confirmModalDelete()}>Confirmar</Button>
 				</DialogActions>
 			</Dialog>
 		</>

@@ -5,7 +5,7 @@ import api from '../service/projeto.api';
 import { deleteProjeto } from '../store/projeto.slice';
 
 
-const urlBase = '/app/geral/projeto/';
+const urlBase = '/app/geral/projeto';
 
 export const ProjetoGrid: React.FC = () => {
 
@@ -45,8 +45,8 @@ export const ProjetoGrid: React.FC = () => {
 	const toolbar = {
 		exibirAtualizar: true,
 		novo: {
-			onClick: () => navigate(`${urlBase}/new`),
-			route: `${urlBase}/new`,
+			onClick: () => navigate(`${urlBase}/add`),
+			route: `${urlBase}/add`,
 		},
 	};
 

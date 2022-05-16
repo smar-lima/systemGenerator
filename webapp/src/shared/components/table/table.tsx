@@ -2,6 +2,7 @@ import {
 	DataGrid,
 	GridActionsCellItem,
 	GridColumns,
+	GridFilterModel,
 	GridSearchIcon, 
 	GridToolbarDensitySelector, 
 	GridToolbarExport, 
@@ -10,7 +11,7 @@ import {
 import { Box, IconButton, Paper, Skeleton, TextField, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import {ITableProps} from '../../types/tableDados.types';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import VisualizarIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,46 +19,8 @@ import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal'
 import { Environment } from '../../environment';
 import { useDispatch } from 'react-redux';
 import { FerramentasDaListagem } from '../ferramentas-da-listagem/ferramentasDaListagem.component';
-
-const CustomToolbar = () => {
-
-	return (
-		<Box display='flex' justifyContent={'end'} width={'100%'}>
-			<Box 
-				display='flex'
-				justifyContent={'start'}
-				width={'100%'}
-			>
-				<TextField
-					variant="outlined"
-					value={''}
-					onChange={() => ''}
-					placeholder="Pesquisar..."
-					style={{width:'50%'}}
-					InputProps={{
-						startAdornment: <GridSearchIcon fontSize="small" />,
-						endAdornment: (
-							<IconButton
-								title="Clear"
-								aria-label="Clear"
-								size="small"
-								//style={{ visibility: props.value ? 'visible' : 'hidden' }}
-								onClick={() => ''/*props.clearSearch*/}
-							>
-								<ClearIcon fontSize="small" />
-							</IconButton>
-						),
-					}}
-				/>
-			</Box>
-			<Box display='inline-flex'>
-				<GridToolbarExport />
-				<GridToolbarDensitySelector />
-			</Box>
-			
-		</Box>
-	);
-};
+import { useAppThemeContext } from '../../contexts';
+import { green, grey } from '@mui/material/colors';
 
 export const Table = ({
 	columns,
@@ -79,6 +42,15 @@ export const Table = ({
 	const [ newColumns, setNewColumns ] = useState<GridColumns>([]);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [itemToDelete, setItemToDelete] = useState<any>();
+	
+	const { themeName } = useAppThemeContext();
+
+	const [queryOptions, setQueryOptions] = useState({});
+	const [pageOptions, setPageOptions] = useState({});
+	const [simpleFilter, setSimpleFilter] = useState('');
+
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
 
 	const confirmExclude = (itemToDelete: any, actionDelete: any) => {
 		const dtoToDelete = {
@@ -138,7 +110,7 @@ export const Table = ({
 				field: 'actions',
 				type: 'actions',
 				headerName:'Ações',
-				width: 100,
+				width: 130,
 				getActions: (item:any) => {
 					const acoes: any[] = [];
 					actions.map((action) => {
@@ -183,6 +155,70 @@ export const Table = ({
 			setNewColumns(cols);
 		}
 	};
+
+	const onFilterChange = useCallback((filterModel: GridFilterModel) => {
+		// Here you save the data you need from the filter model
+		setQueryOptions({ filterModel: { ...filterModel } });
+	}, []);
+
+	useMemo(
+		async () => {
+			await setPageOptions({
+				page,
+				pageSize
+			});
+		},
+		[page, pageSize],
+	);
+	
+	useMemo(
+		async () => {
+			console.log('pageOptions',pageOptions);
+			console.log('queryOptions',queryOptions);
+			console.log('simpleFilter',simpleFilter);
+		},
+		[pageOptions, queryOptions],
+	);
+
+	const CustomSearch = () => {
+
+		return (
+			<Box display='flex' justifyContent={'end'} width={'100%'}>
+				<Box 
+					display='flex'
+					justifyContent={'start'}
+					width={'100%'}
+				>
+					<TextField
+						variant="outlined"
+						value={simpleFilter}
+						onChange={(e) => setSimpleFilter(e.target.value)}
+						placeholder="Pesquisar..."
+						style={{width:'50%'}}
+						InputProps={{
+							startAdornment: <GridSearchIcon fontSize="small" />,
+							endAdornment: (
+								<IconButton
+									title="Clear"
+									aria-label="Clear"
+									size="small"
+									//style={{ visibility: props.value ? 'visible' : 'hidden' }}
+									onClick={() => ''/*props.clearSearch*/}
+								>
+									<ClearIcon fontSize="small" />
+								</IconButton>
+							),
+						}}
+					/>
+				</Box>
+				<Box display='inline-flex'>
+					<GridToolbarExport />
+					<GridToolbarDensitySelector />
+				</Box>
+				
+			</Box>
+		);
+	};
 	
 	return (
 		<>
@@ -200,7 +236,7 @@ export const Table = ({
 							whiteSpace="nowrap"
 							overflow="hidden"
 							textOverflow="ellipsis"
-							variant={smDown ? 'h6' : mdDown ? 'h6' : 'h5'}
+							variant={smDown ? 'h6' : mdDown ? 'h5' : 'h4'}
 						>
 							{'Listagem de ' + options?.titulo}
 						</Typography>
@@ -212,6 +248,7 @@ export const Table = ({
 					mostrarInputBusca={false}
 					aoClicarBotaoNovo={() => toolbar?.novo?.onClick()}
 					aoClicarBotaoAtualizar={() => buscarDadosGrid()}
+					loading={loadInit}
 				/>
 			</Box>
 			{ !loadInit && 
@@ -221,12 +258,22 @@ export const Table = ({
 					paddingX={2}
 					component={Paper}
 					display={'flex'}
+					sx={{ height: '510px', margin: '0 auto 16px' }}
 				>
 					<DataGrid 
 						rows={data} 
 						columns={[...newColumns]}
 						rowsPerPageOptions={[5, 10, 20, 50, 100]}
 						checkboxSelection={options?.selected}
+						density='compact'
+						filterMode="server"
+						paginationMode="server"
+						onFilterModelChange={onFilterChange}
+						onPageChange={(newPage) => setPage(newPage)}
+						onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+						pagination
+						page={page}
+						pageSize={pageSize}
 						initialState={{
 							sorting: {
 								sortModel: order
@@ -240,10 +287,26 @@ export const Table = ({
 								pageSize: 10,
 							}
 						}}
-						components={{
-							Toolbar: CustomToolbar,
+						sx={ themeName === 'light' ? {
+							'& .MuiDataGrid-columnHeaders': {
+								color: grey[100],
+								background: green[700],
+								'& .MuiSvgIcon-root':{
+									color: grey[100]
+								}
+							},
+						} :	{
+							'& .MuiDataGrid-columnHeaders': {
+								color: green[700],
+								background: grey[200],
+								'& .MuiSvgIcon-root':{
+									color: green[700]
+								}
+							},
 						}}
-						autoHeight
+						components={{
+							Toolbar: CustomSearch,
+						}}
 						localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
 					/>
 				</Box>

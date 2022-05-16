@@ -23,15 +23,15 @@ export const LightTheme = createTheme({
 	},
 	typography:{
 		h4:{
-			color: green[800],
+			color: green[700],
 			fontWeight: 700
 		},
 		h5:{
-			color: green[800],
+			color: green[700],
 			fontWeight: 700
 		},
 		h6:{
-			color: green[800],
+			color: green[700],
 			fontWeight: 700
 		},
 	},
@@ -40,9 +40,9 @@ export const LightTheme = createTheme({
 			styleOverrides:{
 				root:{
 					background: green[700],
-					color: 'white',
+					color: grey[100],
 					'&:hover': {
-						background: 'white',
+						background: grey[100],
 						color: green[700],
 					 },
 				}
@@ -54,10 +54,10 @@ export const LightTheme = createTheme({
 				  props: { color: 'primary' },
 				  style: {
 						background: green[600],
-						color: 'white',
+						color: grey[100],
 						'&:hover': {
 							background: green[800],
-							color: 'white',
+							color: grey[100],
 						 },
 				  },
 				},
@@ -93,6 +93,17 @@ export const LightTheme = createTheme({
 						background: green[200],
 						color: grey[600]
 					},
+				}
+			}
+		},
+		MuiPaper:{
+			styleOverrides:{
+				root:{
+					'&.MuiDialog-paper': {
+						border: '3px',
+						borderStyle: 'solid',
+						borderColor: green[700]
+					}
 				}
 			}
 		},
