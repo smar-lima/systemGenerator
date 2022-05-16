@@ -11,12 +11,10 @@ import { Box, IconButton, Paper, Skeleton, TextField, Tooltip, Typography, useMe
 import {ITableProps} from '../../types/tableDados.types';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useEffect, useState } from 'react';
-//import { SnackBarError } from '../../utils/snackBarHelper';
 import EditIcon from '@mui/icons-material/Edit';
 import VisualizarIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
-import { AnyAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 import { Environment } from '../../environment';
 import { useDispatch } from 'react-redux';
 import { FerramentasDaListagem } from '../ferramentas-da-listagem/ferramentasDaListagem.component';
@@ -114,7 +112,6 @@ export const Table = ({
 			await setLoadInit(false);
 			return true;
 		}else {
-			//SnackBarError('Erro ao tentar buscar os itens da tabela.');
 			await setLoadInit(false);
 			return false;
 		}
@@ -127,7 +124,6 @@ export const Table = ({
 				if(await buscarDadosGrid())
 					await montaAcoes();
 			} catch (error: any) {
-				//SnackBarError(error.message);
 				await setLoadInit(false);
 			}
 		}
@@ -146,7 +142,6 @@ export const Table = ({
 				getActions: (item:any) => {
 					const acoes: any[] = [];
 					actions.map((action) => {
-						//console.log('action',action);
 						if(action.type === 'visualizar')
 							acoes.push(
 								<Tooltip title={'Visualizar'} placement="top">

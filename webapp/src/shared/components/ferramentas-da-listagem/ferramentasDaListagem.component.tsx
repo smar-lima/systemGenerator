@@ -1,8 +1,6 @@
-import { Box, IconButton, Paper, TextField, Tooltip, useTheme, Divider, Skeleton } from '@mui/material';
+import { Box, IconButton, Tooltip, useTheme, Divider, Skeleton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SyncIcon from '@mui/icons-material/Sync';
-
-import { Environment } from '../../environment';
 interface IFerramentasDaListagemProps {
     textoDaBusca?: string;
     mostrarInputBusca?: boolean;
@@ -15,22 +13,7 @@ interface IFerramentasDaListagemProps {
 	loadingInicial?: boolean
 }
 
-interface IBotaoBarraListagem {
-    label?: string;
-    onClick?:  (a: any) => void;
-    route?: string;
-	icon?: string;
-	mostrarBotaoNovo?: boolean;
-	aoClicarBotaoNovo?: () => void;
-	mostrarBotaoAtualizar?: boolean;
-	aoClicarBotaoAtualizar?: () => void;
-	loadingInicial?: boolean
-}
-
 export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
-	textoDaBusca = '',
-	mostrarInputBusca  = true,
-	aoMudarTextoDeBusca,
 	textoBotaoNovo = 'Novo',
 	mostrarBotaoNovo = true,
 	aoClicarBotaoNovo,

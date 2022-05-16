@@ -10,7 +10,6 @@ import LightMode from '@mui/icons-material/LightMode';
 export const MenuSimples: React.FC = () => {
 	const { toggleTheme } = useAppThemeContext();
 	const { themeName } = useAppThemeContext();
-
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

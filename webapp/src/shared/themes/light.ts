@@ -1,7 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { createTheme } from '@mui/material';
-import { green, yellow, grey } from '@mui/material/colors';
-import { fontWeight } from '@mui/system';
+import { green, grey } from '@mui/material/colors';
 
 export const LightTheme = createTheme({
 	palette: {

@@ -1,18 +1,14 @@
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import  {Table}  from '../../../../shared/components/table/table';
 import GridProjetoDDados from '../projeto.table.ddados';
 import api from '../service/projeto.api';
 import { deleteProjeto } from '../store/projeto.slice';
-//import {AlertaConfirmacaoModal} from '../../../../shared/components/modal-alerta-confimacao/alertaConfirmacaoModal';
-import { Dialog } from '@mui/material';
 
 
 const urlBase = '/app/geral/projeto/';
 
 export const ProjetoGrid: React.FC = () => {
 
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const columns = GridProjetoDDados.columns;

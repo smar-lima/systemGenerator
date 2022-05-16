@@ -1,35 +1,7 @@
-import { useEffect, useState } from 'react';
-import { PaginaFormLayout } from '../../../../shared/layouts';
 
-type Props = {
-	titulo?: string,
-	children: React.ReactNode;
-	loadingInicial?: boolean;
-	propsBarraDetalhes?: any;
-    exibirBarraDetalhes?: boolean;
-  };
+import { ProjetoForm } from '../components/projeto.form';
 
-const prefix = 'I';
+export const ProjetoNew: React.FC = () => {
 
-export const ProjetoNew: React.FC<Props> = (props) => {
-
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		setTimeout(() => {
-			setLoading(false);
-		}, 5000);
-		
-	},[]);
-
-	return(
-		<PaginaFormLayout 
-			titulo={props?.titulo}
-			propsBarraDetalhes={props?.propsBarraDetalhes}
-			loadingInicial={loading}
-			prefix={prefix}
-		>
-			{props.children}
-		</PaginaFormLayout>
-	);
+	return <ProjetoForm />;
 };

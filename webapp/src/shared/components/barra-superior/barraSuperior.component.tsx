@@ -6,8 +6,6 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuSimples} from '../menu-simples/menuSimples';
 import { Grid } from '@mui/material';
-import { green } from '@mui/material/colors';
-
 
 const drawerWidth = 240;
 
