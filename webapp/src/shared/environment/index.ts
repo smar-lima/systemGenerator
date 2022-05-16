@@ -30,6 +30,10 @@ export const Environment = {
 	/**
      * Define mensagem padrão quando a entidade é excluida com sucesso.
      */
-	ERRO_AO_DELETAR: 'Ocorreu um erro ao tentar apagar '
+	ERRO_AO_DELETAR: 'Ocorreu um erro ao tentar apagar ',
+	/**
+     * Define mensagem padrão quando a entidade é excluida com sucesso.
+     */
+	CONFIRMACAO_DELETE: 'Deseja realmente excluir este item?'
 };
 

@@ -11,7 +11,5 @@ type Props = {
 
 export const SistemaList: React.FC<Props> = (props) => {
 
-	return(
-		<></>
-	);
+	return(<div></div>);
 };

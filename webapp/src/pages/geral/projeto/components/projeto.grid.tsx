@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import  Table  from '../../../../shared/components/table/table';
+import  {Table}  from '../../../../shared/components/table/table';
 import GridProjetoDDados from '../projeto.table.ddados';
 import api from '../service/projeto.api';
 import { deleteProjeto } from '../store/projeto.slice';
-import AlertaConfirmacaoModal from '../../../../shared/components/modal-alerta-confimacao/alertaConfirmacaoModal';
+//import {AlertaConfirmacaoModal} from '../../../../shared/components/modal-alerta-confimacao/alertaConfirmacaoModal';
+import { Dialog } from '@mui/material';
 
 
 const urlBase = '/app/geral/projeto/';
@@ -20,21 +21,18 @@ export const ProjetoGrid: React.FC = () => {
 
 	const actions = [
 		{
-			type: 'Visualizar',
-			onClick: (dataItem: any) => navigate(`${urlBase}/view/${dataItem.Id}`),
+			type: 'visualizar',
+			onClick: (dataItem: any) => navigate(`${urlBase}/view/${dataItem}`),
 			url: `${urlBase}/view/:id`,
 		},
 		{
 			type: 'editar',
-			onClick: (dataItem: any) => navigate(`${urlBase}/edit/${dataItem.Id}`),
+			onClick: (dataItem: any) => navigate(`${urlBase}/edit/${dataItem}`),
 			url: `${urlBase}/edit/:id`,
 		},
 		{
 			type: 'deletar',
-			onClick: async (dataItem: { Id: any; })=> {
-				const result = await AlertaConfirmacaoModal('teste texto');
-				if (result) dispatch(deleteProjeto(dataItem.Id));
-			},
+			onClick: (id: any)=> deleteProjeto(id),
 			url: `${urlBase}/delete/:id`,
 		},
 	];

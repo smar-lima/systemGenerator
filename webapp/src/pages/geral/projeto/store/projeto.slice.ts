@@ -21,10 +21,7 @@ export const slice = createSlice({
 			return initialState;
 		},
 		deleteProjeto(state, {payload}) {
-			async function del(Id: number){
-				await deletar(Id);
-			}
-			del(payload.Id);
+			deletar(payload);
 		}
 	}
 });

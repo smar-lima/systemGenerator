@@ -1,16 +1,14 @@
-import axios from 'axios';
 import service from '../../../../shared/api';
 
 const base = '/project';
 
-const cancelToken = axios.CancelToken.source();
 
 export default {
 	getById(id: any) {
 		return service.get(`${base}/${id}`);
 	},
 	getAll() {
-		return service.get(`${base}`, {cancelToken: cancelToken.token});
+		return service.get(`${base}`);
 	},
 	create(param: any) {
 		return service.post(`${base}`, param);

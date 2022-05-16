@@ -18,17 +18,17 @@ const GridProjetoDDados: GridDDados = {
 		{ 
 			field: 'id', 
 			headerName: 'Projeto', 
-			width: 150 
+			flex: 1,
 		},
 		{ 
 			field: 'name', 
 			headerName: 'Nome', 
-			width: 150 
+			flex: 1,
 		},
 		{ 
 			field: 'location', 
 			headerName: 'Endereço', 
-			width: 150 
+			flex: 1,
 		},
 	],
 };

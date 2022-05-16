@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SistemaList } from '../container/sistema.list';
-import Table from '../../../../shared/components/table/table';
+import {Table} from '../../../../shared/components/table/table';
 import GridSistemaDDados from '../sistema.table.ddados';
 import api from '../service/sistema.api';
 
@@ -30,7 +30,5 @@ export const SistemaGrid: React.FC = () => {
 		loadingSkeleton: false
 	};
 
-	return (
-		<></>
-	);
+	return(<div></div>);
 };

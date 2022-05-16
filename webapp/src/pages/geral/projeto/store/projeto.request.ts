@@ -1,5 +1,6 @@
 import api from '../service/projeto.api';
 import { AxiosResponse } from 'axios';
+import {SnackBarSuccess,SnackBarError} from '../../../../shared/utils/snackBarHelper';
 
 import { Environment } from '../../../../shared/environment';
 
@@ -11,14 +12,19 @@ export const atualizar = () => {
 ''
 };*/
 
-export const deletar = async (Id: number) => {
+export const deletar = async ({id,reloadGrid}: any) => {
 	try {
-		const resp: AxiosResponse = await api.delete(Id);
-		resp.status === 200 ? console.error('') : console.error('');
-		/*await SnakeBarSuccess('Projeto apagado com sucesso.')	:
-		await SnakeBarError(Environment.ERRO_AO_DELETAR + 'o Projeto' + '.');  */
+		await api.delete(id).then(async (response) => {
+			if(response.status === 204){
+				reloadGrid();
+				console.log('SnackBarSuccess',SnackBarSuccess);
+				await SnackBarSuccess('Projeto apagado com sucesso.');
+			}else {
+				await SnackBarError(Environment.ERRO_AO_DELETAR + 'o Projeto' + '.');
+			}
+		});
 	} catch (error: any) {
 		console.error(error.message);
-		//await SnakeBarError(Environment.ERRO_AO_DELETAR + 'o Projeto' + '.');
+		await SnackBarError(Environment.ERRO_AO_DELETAR + 'o Projeto' + '.');
 	}
 };

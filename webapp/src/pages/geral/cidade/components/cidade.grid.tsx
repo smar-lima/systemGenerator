@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { CidadeList } from '../container/cidade.list';
-import Table from '../../../../shared/components/table/table';
+import {Table} from '../../../../shared/components/table/table';
 import GridCidadeDDados from '../cidade.table.ddados';
 
 export const CidadeGrid: React.FC = () => {
@@ -29,7 +29,5 @@ export const CidadeGrid: React.FC = () => {
 		api
 	};
 
-	return (
-		<></>
-	);
+	return(<div></div>);
 };

@@ -1,4 +1,4 @@
-import { GridColDef, GridFilterItem, GridSortModel } from '@mui/x-data-grid';
+import { GridColDef, GridColumns, GridFilterItem, GridSortModel } from '@mui/x-data-grid';
 import { AxiosPromise } from 'axios';
 
 interface IOrderProps {
@@ -20,10 +20,13 @@ interface IFilterInitProps {
 }
 
 interface IActionsProps {
+	getActions?: any;
+	field?:any;
 	type?: string;
 	onClick?: any;
 	url?: string;
 	icon?: any;
+	width?: any;
 }
 
 interface IOptionsProps {
@@ -46,7 +49,7 @@ interface IToolbarProps {
 }
 
 export interface ITableProps {
-	columns: GridColDef[];
+	columns: GridColumns;
 	order?: GridSortModel;
 	filterInit: GridFilterItem[];
 	actions?: IActionsProps[];

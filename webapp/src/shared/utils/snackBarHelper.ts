@@ -1,17 +1,19 @@
-import { VariantType, useSnackbar } from 'notistack';
+import { useSnackbar, VariantType } from 'notistack';
 
 
-const { enqueueSnackbar } = useSnackbar();
 
-export const SnackBarSuccess = (mensagem: string) => {
+export async function SnackBarSuccess(mensagem: string) {
+	const { enqueueSnackbar } = await useSnackbar();
 	const variant: VariantType = 'success';
-	enqueueSnackbar(mensagem, {variant});
-};
+	await enqueueSnackbar(mensagem, {variant});
+}
 
-export const SnackBarError = (mensagem: string) => {
+export async function SnackBarError(mensagem: string) {
+	const { enqueueSnackbar } = await useSnackbar();
 	const variant: VariantType = 'error';
-	enqueueSnackbar(mensagem, {variant});
-};
+	await enqueueSnackbar(mensagem, {variant});
+}
+
 
 /*export const SnackBarHelper = (mensagem: string) => {
 	const variant: VariantType = 'success';
