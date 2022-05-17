@@ -2,7 +2,7 @@
 
 namespace Domain.Models.Project
 {
-    public class PostProjectModel
+    public class PostPutProjectModel
     {
         [Required]
         public string Name { get; set; }

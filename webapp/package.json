@@ -1,0 +1,76 @@
+{
+  "name": "webapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "set BROWSER=none && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "mock": "json-server -w -p 3333 ./mock/database.json"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.7.0",
+    "@mui/styled-engine-sc": "^5.7.0",
+    "@mui/x-data-grid": "^5.11.0",
+    "@reduxjs/toolkit": "^1.8.1",
+    "@types/seamless-immutable": "^7.1.16",
+    "@types/webpack": "^5.28.0",
+    "axios": "^0.27.2",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-hook-form": "^7.31.1",
+    "react-hotkeys": "^2.0.0",
+    "react-promise": "^3.0.2",
+    "react-redux": "^8.0.1",
+    "react-router-dom": "6",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^9.0.1",
+    "redux": "^4.2.0",
+    "redux-watch": "^1.2.0",
+    "seamless-immutable": "^7.1.4",
+    "styled-components": "^5.3.5",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.0",
+    "@types/node": "^16.11.33",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
+    "@types/styled-components": "^5.1.25",
+    "@types/webpack-env": "^1.16.4",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "eslint": "^8.14.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "json-server": "^0.17.0",
+    "typescript": "^4.6.4",
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.72.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
