@@ -25,7 +25,7 @@ namespace SystemGeneratorBackend.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost("filter")]
         //[Authorize]
         public async Task<IActionResult> GetAll()
         {

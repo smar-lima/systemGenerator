@@ -6,11 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuSimples} from '../menu-simples/menuSimples';
 import { Grid } from '@mui/material';
+import { useDrawerContext } from '../../contexts';
 
-const drawerWidth = 240;
 
 export const BarraSuperior = (props: { open: boolean | undefined,  handleDrawerOpen: any;}) => {
 
+	const { drawerWidth } = useDrawerContext();
 	interface AppBarProps extends MuiAppBarProps {
 		open?: boolean;
 	}

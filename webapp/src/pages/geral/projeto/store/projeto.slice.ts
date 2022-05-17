@@ -4,7 +4,8 @@ import { deletar } from './projeto.request';
 
 const initialState = {
 	id: 1,
-	Nome: 'ttt',
+	nome: 'teste',
+	endereco: 'teste e',
 };
 
 export const slice = createSlice({

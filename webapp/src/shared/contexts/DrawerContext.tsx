@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, useCallback } from 'react';
+import { number } from 'yup';
 
 interface IDrowerContextData {
 	isDrawerOpen: boolean;
 	toogleDrawerOpen: () => void;
     drawerOptions: any[];
+	topBarHeight: number;
+	drawerWidth: number;
     setDrawerOptions: (newDrawerOptions: any[]) => void;
 }
 
@@ -21,6 +24,10 @@ export const useDrawerContext = () => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AppDrawerProvider: any = (props: DrawerProviderProps) => {
 
+	const drawerWidth = 240;
+
+	const topBarHeight = 64;
+
 	const [drawerOptions, setDrawerOptions] = useState<any[]>([]);
 
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -34,7 +41,7 @@ export const AppDrawerProvider: any = (props: DrawerProviderProps) => {
 	},[]);
 
 	return (
-		<DrawerContext.Provider  value={{isDrawerOpen, drawerOptions, toogleDrawerOpen, setDrawerOptions: handleSetDrawerOptions}}>   
+		<DrawerContext.Provider  value={{isDrawerOpen, drawerOptions, toogleDrawerOpen, setDrawerOptions: handleSetDrawerOptions, drawerWidth, topBarHeight}}>   
 			<div className='div-container-master'>
 				{ props.children }
 			</div>

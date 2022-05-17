@@ -39,8 +39,6 @@ namespace Application.Services
                 projects = _projectRepository.GetAllReadOnly().ToList();
             }, cancellationToken);
 
-            
-
             return projects;
         }
 

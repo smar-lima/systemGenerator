@@ -2,22 +2,21 @@ import {
 	DataGrid,
 	GridToolbar,
 	GridColumns,
-	GridFilterModel,
 	ptBR
 } from '@mui/x-data-grid';
 import { Box, Paper, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import {ITableProps} from '../../types/tableDados.types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import {  useEffect, useMemo, useState } from 'react';
 import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
 import { Environment } from '../../environment';
 import { useDispatch } from 'react-redux';
 import { FerramentasDaListagem } from '../ferramentas-da-listagem/ferramentasDaListagem.component';
 import { useAppThemeContext } from '../../contexts';
-import { green, grey } from '@mui/material/colors';
 import { CustomNoRowsOverlay } from './noRowsOverlays';
 import { LoadingSkeleton } from './tableLoadSkeleton';
 import { montaAcoes } from './acoesGridHelper';
 import { toast } from 'react-toastify';
+import GridContainer from '../../layouts/gridContainer';
 
 export const Table = ({
 	columns,
@@ -115,9 +114,9 @@ export const Table = ({
 		},
 		[filtroGrid],
 	);
-	
+
 	return (
-		<Box >
+		<GridContainer>
 			<Box padding={2} display='flex' flexDirection='column' gap={1}>
 				{
 					options?.titulo &&
@@ -163,6 +162,7 @@ export const Table = ({
 				>
 					<DataGrid 
 						rows={data} 
+						rowCount={data.length}
 						columns={[...newColumns]}
 						rowsPerPageOptions={[5, 10, 20, 50, 100]}
 						checkboxSelection={options?.selected}
@@ -198,10 +198,10 @@ export const Table = ({
 						}}
 						sx={ themeName === 'light' ? {
 							'& .MuiDataGrid-columnHeaders': {
-								color: grey[100],
-								background: green[400],
+								color: theme.palette.background.paper,
+								background: theme.palette.primary.main,
 								'& .MuiSvgIcon-root':{
-									color: grey[100]
+									color: theme.palette.secondary.light
 								}
 							},
 							'& .MuiDataGrid-toolbarContainer':{
@@ -209,10 +209,10 @@ export const Table = ({
 							}
 						} :	{
 							'& .MuiDataGrid-columnHeaders': {
-								color: green[400],
-								background: grey[200],
+								color: theme.palette.text.secondary,
+								background: theme.palette.secondary.contrastText,
 								'& .MuiSvgIcon-root':{
-									color: green[400]
+									color: theme.palette.text.secondary
 								}
 							},
 							'& .MuiDataGrid-toolbarContainer':{
@@ -240,6 +240,6 @@ export const Table = ({
 					cancelModalDelete={() => onCancelModalDelete()}
 				/>
 			}
-		</Box>
+		</GridContainer>
 	);
 };

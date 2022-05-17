@@ -26,12 +26,10 @@ import { SvgIconComponent } from '@mui/icons-material';
 import React from 'react';
 import { getTelasDoMenuRapido } from '../menu-rapido/menuRapido.component';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { grey, green } from '@mui/material/colors';
 import VoltarIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-
-const drawerWidth = 240;
+import MainContainer from '../../layouts/mainContainer';
 interface IListItemLinkProps {
 	label: string;
 	Icone: SvgIconComponent ;
@@ -83,7 +81,13 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 
 	const smDown = useMediaQuery(theme.breakpoints.down('md'));
 
-	const { isDrawerOpen, toogleDrawerOpen, drawerOptions, setDrawerOptions} = useDrawerContext();
+	const { 
+		isDrawerOpen, 
+		toogleDrawerOpen, 
+		drawerOptions, 
+		setDrawerOptions, 
+		drawerWidth
+	} = useDrawerContext();
 
 	const navigate = useNavigate();
 
@@ -221,7 +225,7 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 							)}
 						</Box>
 					</GlobalHotKeys>
-					<Divider style={{marginTop: '15px', background: themeName === 'light' ?  green[100] : grey[400]}}/>
+					<Divider style={{marginTop: '15px', background: themeName === 'light' ?  theme.palette.primary.light : theme.palette.secondary.light}}/>
 					<Box flex={1}>
 						<List component={'nav'}>
 							{drawerOptions.map(drawerOption => {
@@ -234,9 +238,9 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 														<div key={item.id} style={{cursor:'pointer'}}>
 															<ListItem
 																style={menuPaiSelecionado === item?.index && themeName === 'light' ? 
-																	{ border: '2px ridge ', borderColor: green[300], cursor: 'pointer'} :
+																	{ border: '2px ridge ', borderColor: theme.palette.primary.light, cursor: 'pointer'} :
 																	menuPaiSelecionado === item?.index && themeName === 'dark' ?
-																		{ border: '2px ridge ', borderColor: grey[500], cursor: 'pointer'} : {}
+																		{ border: '2px ridge ', borderColor: theme.palette.secondary.light, cursor: 'pointer'} : {}
 																}
 																key={item.path}
 																onClick={handleClick.bind(
@@ -254,9 +258,9 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 																<Typography 
 																	color={
 																		themeName === 'dark' ?
-																			grey[200] : grey[600]
+																			theme.palette.text.primary : theme.palette.secondary.dark
 																	}
-																	fontWeight={500} 
+																	fontWeight={400} 
 																	whiteSpace={'nowrap'} 
 																	textOverflow={'ellipsis'} 
 																	overflow={'hidden'}
@@ -273,8 +277,8 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 															>
 																<Box key={item.id} style={
 																	themeName === 'light' ? 
-																		{background: grey[200]} :  
-																		{background: grey[500]}}
+																		{background: theme.palette.secondary.light} :  
+																		{background: theme.palette.secondary.main}}
 																>
 																	<List disablePadding>
 																		{item.subitems.map(
@@ -318,12 +322,9 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 					width={'100vw'} 
 					height={'100vh'} 
 				>
-					<Box 
-						padding={'15px'}
-						marginTop={smDown ? '8%' : '5%'}
-					>
+					<MainContainer>
 						{ children }
-					</Box>
+					</MainContainer>
 				</Box>
 			</Box>
 		</>

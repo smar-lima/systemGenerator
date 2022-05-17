@@ -37,7 +37,7 @@ export const ProjetoGrid: React.FC = () => {
 		titulo: 'Projetos',
 		service: api.getAll,
 		ocultarBarraFerramentas: false,
-		buscarAoRenderizar: false,
+		buscarAoRenderizar: true,
 		selected: true,
 	};
 
@@ -63,5 +63,4 @@ export const ProjetoGrid: React.FC = () => {
 			{...config}
 		/>
 	);
-	
 };

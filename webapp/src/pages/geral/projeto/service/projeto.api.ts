@@ -1,12 +1,10 @@
 import service from '../../../../shared/api';
-import ObjectHelper from '../../../../shared/utils/objetcHelper';
 
 const base = '/project';
 
 export default {
 	async getAll(filtro: any) {
-		const params = await ObjectHelper.createParams(filtro);
-		return service.get(`${base}${params}`);
+		return service.post(`${base}/filter`,filtro);
 	},
 	getById(id: any) {
 		return service.get(`${base}/${id}`);

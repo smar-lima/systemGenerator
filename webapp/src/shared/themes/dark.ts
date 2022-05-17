@@ -10,7 +10,7 @@ export const DarkTheme = createTheme({
 			main: grey[300],
 			dark: grey[700],
 			light: grey[200],
-			contrastText: green[800],
+			contrastText: green[500],
 		},
 		secondary:{
 			main: grey[700],
@@ -24,8 +24,8 @@ export const DarkTheme = createTheme({
 		},
 		text: {
 			primary: '#ffffff',
-			secondary: '#ffffff',
-			disabled: '#ffffff',
+			secondary: green[500],
+			disabled: grey[500],
 		},
 		
 	},
