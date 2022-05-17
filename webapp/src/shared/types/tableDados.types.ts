@@ -15,7 +15,6 @@ interface IOptionsProps {
 	service: any;
 	ocultarBarraFerramentas?: boolean;
 	buscarAoRenderizar?: boolean;
-	loadingSkeleton?: boolean;
 	selected?: boolean;
 }
 

@@ -127,13 +127,11 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 	};
 
 	const handleClick = (e: any) => {
-		console.log('passou 12');
 		setMenuPaiSelecionado(e.index);
 		setEstado({ [e.label]: !estado[e.label] });
 	};
 
 	const onClickSimpleMenu = () => {
-		console.log('passou 13');
 		if(smDown){
 			toogleDrawerOpen();
 			setEstado({});
@@ -149,14 +147,14 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 			<Box sx={{ display: 'flex' }}>
 				<BarraSuperior open={isDrawerOpen} handleDrawerOpen={toogleDrawerOpen}/>
 				<Drawer
-					sx={{
+					sx={isDrawerOpen ? {
 						width: drawerWidth,
 						flexShrink: 0,
 						'& .MuiDrawer-paper': {
 							width: drawerWidth,
 							boxSizing: 'border-box',
 						},
-					}}
+					} : {}}
 					variant={smDown ? 'temporary' : 'persistent'}
 					anchor="left"
 					onClose={toogleDrawerOpen}
@@ -317,11 +315,15 @@ export const MenuLateral: React.FC<{ children: any }> = ({ children }) => {
 					</Box>
 				</Drawer>
 				<Box 
-					paddingX={3} 
-					width={'100%'} 
-					style={{paddingTop: '5%', marginLeft: !isDrawerOpen ?`-${drawerWidth}px`: ''}}
+					width={'100vw'} 
+					height={'100vh'} 
 				>
-					{ children }
+					<Box 
+						padding={'15px'}
+						marginTop={smDown ? '8%' : '5%'}
+					>
+						{ children }
+					</Box>
 				</Box>
 			</Box>
 		</>

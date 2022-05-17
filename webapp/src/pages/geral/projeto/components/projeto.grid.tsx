@@ -37,8 +37,7 @@ export const ProjetoGrid: React.FC = () => {
 		titulo: 'Projetos',
 		service: api.getAll,
 		ocultarBarraFerramentas: false,
-		buscarAoRenderisar: false,
-		loadingSkeleton: false,
+		buscarAoRenderizar: false,
 		selected: true,
 	};
 

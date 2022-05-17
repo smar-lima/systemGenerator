@@ -1,26 +1,23 @@
 import { 
 	DataGrid,
-	GridActionsCellItem,
+	GridToolbar,
 	GridColumns,
 	GridFilterModel,
-	GridSearchIcon, 
-	GridToolbarDensitySelector, 
-	GridToolbarExport, 
 	ptBR
 } from '@mui/x-data-grid';
-import { Box, IconButton, Paper, Skeleton, TextField, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Paper, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import {ITableProps} from '../../types/tableDados.types';
-import ClearIcon from '@mui/icons-material/Clear';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
-import VisualizarIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
 import { Environment } from '../../environment';
 import { useDispatch } from 'react-redux';
 import { FerramentasDaListagem } from '../ferramentas-da-listagem/ferramentasDaListagem.component';
 import { useAppThemeContext } from '../../contexts';
 import { green, grey } from '@mui/material/colors';
+import { CustomNoRowsOverlay } from './noRowsOverlays';
+import { LoadingSkeleton } from './tableLoadSkeleton';
+import { montaAcoes } from './acoesGridHelper';
+import { toast } from 'react-toastify';
 
 export const Table = ({
 	columns,
@@ -32,34 +29,19 @@ export const Table = ({
 }: ITableProps) => {
 	
 	const dispatch = useDispatch();
-
 	const theme = useTheme();
 	const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 	const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
+	const [ contRender, setContRender ] = useState(0);
 	const [ data, setData ] = useState([]);
-	const [ loadInit, setLoadInit ] = useState(true);
+	const [ loadInit, setLoadInit ] = useState(false);
+	const [ loadGrid, setLoadGrid ] = useState(false);
 	const [ newColumns, setNewColumns ] = useState<GridColumns>([]);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [itemToDelete, setItemToDelete] = useState<any>();
-	
 	const { themeName } = useAppThemeContext();
-
-	const [queryOptions, setQueryOptions] = useState({});
-	const [pageOptions, setPageOptions] = useState({});
-	const [simpleFilter, setSimpleFilter] = useState('');
-
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(10);
-
-	const confirmExclude = (itemToDelete: any, actionDelete: any) => {
-		const dtoToDelete = {
-			id: itemToDelete.id,
-			actionDelete: actionDelete
-		};
-		setItemToDelete(dtoToDelete);
-		setOpenModalDelete(true);
-	};
+	const [filtroGrid, setFiltroGrid] = useState({page:0,pageSize:10,filter:{}});
 
 	const onConfirmModalDelete = async () => {
 		await dispatch(
@@ -77,10 +59,17 @@ export const Table = ({
 		setOpenModalDelete(false);
 	};
 
-	const buscarDadosGrid = async () => {
-		const response = await options.service();
+	const buscarDadosGrid = async (filtro: any) => {
+		console.log('ent');
+		await setData([]);
+		await setTimeout(() => {
+			setLoadGrid(true);
+		}, 100);
+		
+		const response = await options.service(filtro);
 		if(response.status === 200){
-			setData(response.data);
+			await setData(response.data);
+			await setLoadGrid(false);
 			await setLoadInit(false);
 			return true;
 		}else {
@@ -89,139 +78,46 @@ export const Table = ({
 		}
 	};
 
+	const montarListaAcoes = async () => {
+		const cols: GridColumns = await montaAcoes(
+			actions, 
+			columns, 
+			setItemToDelete, 
+			setOpenModalDelete
+		);
+		setNewColumns(cols);
+	};
+	
 	useEffect( () => {
 		async function init(){
 			try {
-				await setLoadInit(true);
-				if(await buscarDadosGrid())
-					await montaAcoes();
+				if(options?.buscarAoRenderizar){
+					await setLoadInit(true);
+					await buscarDadosGrid(filtroGrid);
+				}
+				await montarListaAcoes();
 			} catch (error: any) {
+				toast.error('Erro ao tentar buscar os dados da listagem.');
+				await montarListaAcoes();
 				await setLoadInit(false);
 			}
 		}
 		init();
 	},[]);
-
-	const montaAcoes = () => {
-
-		if(actions && actions.length > 0){
-	
-			const columAction = {
-				field: 'actions',
-				type: 'actions',
-				headerName:'Ações',
-				width: 130,
-				getActions: (item:any) => {
-					const acoes: any[] = [];
-					actions.map((action) => {
-						if(action.type === 'visualizar')
-							acoes.push(
-								<Tooltip title={'Visualizar'} placement="top">
-									<GridActionsCellItem 
-										icon={<VisualizarIcon/>} 
-										onClick={() => console.log('dataItem visualizar', item)}
-										label={action.type}
-									/>
-								</Tooltip>
-							);
-						if(action.type === 'editar')
-							acoes.push(
-								<Tooltip title={'Editar'} placement="top">
-									<GridActionsCellItem 
-										icon={<EditIcon />} 
-										label={action.type} 
-										onClick={() => console.log('item 1 editar', item)}
-									/>
-								</Tooltip>
-							);
-						if(action.type === 'deletar')
-							acoes.push(
-								<Tooltip title={'Excluir'} placement="top">
-									<GridActionsCellItem 
-										icon={<DeleteIcon />} 
-										label={action.type}
-										onClick={async () => {
-											confirmExclude(item, action.onClick);
-										}}
-									/>
-								</Tooltip>
-							);
-					});
-					return acoes;
-				}
-			};
-			
-			const cols: GridColumns = [...columns, columAction];
-			setNewColumns(cols);
-		}
-	};
-
-	const onFilterChange = useCallback((filterModel: GridFilterModel) => {
-		// Here you save the data you need from the filter model
-		setQueryOptions({ filterModel: { ...filterModel } });
-	}, []);
-
-	useMemo(
-		async () => {
-			await setPageOptions({
-				page,
-				pageSize
-			});
-		},
-		[page, pageSize],
-	);
 	
 	useMemo(
 		async () => {
-			console.log('pageOptions',pageOptions);
-			console.log('queryOptions',queryOptions);
-			console.log('simpleFilter',simpleFilter);
+			if(contRender > 1){
+				console.log('filterGrid',filtroGrid);
+				await buscarDadosGrid(filtroGrid);
+			}
+			setContRender(contRender + 1);
 		},
-		[pageOptions, queryOptions],
+		[filtroGrid],
 	);
-
-	const CustomSearch = () => {
-
-		return (
-			<Box display='flex' justifyContent={'end'} width={'100%'}>
-				<Box 
-					display='flex'
-					justifyContent={'start'}
-					width={'100%'}
-				>
-					<TextField
-						variant="outlined"
-						value={simpleFilter}
-						onChange={(e) => setSimpleFilter(e.target.value)}
-						placeholder="Pesquisar..."
-						style={{width:'50%'}}
-						InputProps={{
-							startAdornment: <GridSearchIcon fontSize="small" />,
-							endAdornment: (
-								<IconButton
-									title="Clear"
-									aria-label="Clear"
-									size="small"
-									//style={{ visibility: props.value ? 'visible' : 'hidden' }}
-									onClick={() => ''/*props.clearSearch*/}
-								>
-									<ClearIcon fontSize="small" />
-								</IconButton>
-							),
-						}}
-					/>
-				</Box>
-				<Box display='inline-flex'>
-					<GridToolbarExport />
-					<GridToolbarDensitySelector />
-				</Box>
-				
-			</Box>
-		);
-	};
 	
 	return (
-		<>
+		<Box >
 			<Box padding={2} display='flex' flexDirection='column' gap={1}>
 				{
 					options?.titulo &&
@@ -243,14 +139,19 @@ export const Table = ({
 					</Box>
 				}
 			</Box>
-			<Box>
-				<FerramentasDaListagem
-					mostrarInputBusca={false}
-					aoClicarBotaoNovo={() => toolbar?.novo?.onClick()}
-					aoClicarBotaoAtualizar={() => buscarDadosGrid()}
-					loading={loadInit}
-				/>
-			</Box>
+			{
+				!options?.ocultarBarraFerramentas &&
+				<Box>
+					<FerramentasDaListagem
+						mostrarBotaoNovo={toolbar?.novo?.route !== (null || '' || undefined)}
+						mostrarBotaoAtualizar={toolbar?.exibirAtualizar}
+						mostrarInputBusca={false}
+						aoClicarBotaoNovo={() => toolbar?.novo?.onClick()}
+						aoClicarBotaoAtualizar={() => buscarDadosGrid(filtroGrid)}
+						loading={loadInit}
+					/>
+				</Box>
+			}
 			{ !loadInit && 
 				<Box 
 					gap={1}
@@ -265,15 +166,23 @@ export const Table = ({
 						columns={[...newColumns]}
 						rowsPerPageOptions={[5, 10, 20, 50, 100]}
 						checkboxSelection={options?.selected}
-						density='compact'
+						loading={loadGrid}
 						filterMode="server"
 						paginationMode="server"
-						onFilterModelChange={onFilterChange}
-						onPageChange={(newPage) => setPage(newPage)}
-						onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+						onFilterModelChange={
+							(filterModel) => setFiltroGrid({ 
+								...filtroGrid, 
+								filter:{
+									columnField:filterModel?.items[0]?.columnField, 
+									operatorValue:filterModel?.items[0]?.operatorValue, 
+									value:filterModel?.items[0]?.value, 
+								}})
+						}
+						onPageChange={(newPage) => setFiltroGrid({...filtroGrid, page:newPage})}
+						onPageSizeChange={(newPageSize) => setFiltroGrid({...filtroGrid, pageSize:newPageSize})}
 						pagination
-						page={page}
-						pageSize={pageSize}
+						page={filtroGrid.page}
+						pageSize={filtroGrid.pageSize}
 						initialState={{
 							sorting: {
 								sortModel: order
@@ -290,22 +199,30 @@ export const Table = ({
 						sx={ themeName === 'light' ? {
 							'& .MuiDataGrid-columnHeaders': {
 								color: grey[100],
-								background: green[700],
+								background: green[400],
 								'& .MuiSvgIcon-root':{
 									color: grey[100]
 								}
 							},
+							'& .MuiDataGrid-toolbarContainer':{
+								marginTop: '5px'
+							}
 						} :	{
 							'& .MuiDataGrid-columnHeaders': {
-								color: green[700],
+								color: green[400],
 								background: grey[200],
 								'& .MuiSvgIcon-root':{
-									color: green[700]
+									color: green[400]
 								}
 							},
+							'& .MuiDataGrid-toolbarContainer':{
+								marginTop: '5px'
+							}
 						}}
 						components={{
-							Toolbar: CustomSearch,
+							Toolbar: GridToolbar,
+							LoadingOverlay: LoadingSkeleton,
+							NoRowsOverlay: CustomNoRowsOverlay
 						}}
 						localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
 					/>
@@ -323,6 +240,6 @@ export const Table = ({
 					cancelModalDelete={() => onCancelModalDelete()}
 				/>
 			}
-		</>
+		</Box>
 	);
 };

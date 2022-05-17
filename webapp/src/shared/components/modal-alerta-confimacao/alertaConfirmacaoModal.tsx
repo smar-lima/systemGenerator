@@ -40,7 +40,7 @@ export default function AlertConfimModal(props: any) {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button variant={'outlined'} onClick={() => props.cancelModalDelete()}>Cancelar</Button>
+					<Button variant={'contained'} color='secondary' onClick={() => props.cancelModalDelete()}>Cancelar</Button>
 					<Button  variant={'contained'} onClick={() => props.confirmModalDelete()}>Confirmar</Button>
 				</DialogActions>
 			</Dialog>

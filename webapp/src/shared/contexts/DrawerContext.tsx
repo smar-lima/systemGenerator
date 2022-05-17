@@ -35,7 +35,9 @@ export const AppDrawerProvider: any = (props: DrawerProviderProps) => {
 
 	return (
 		<DrawerContext.Provider  value={{isDrawerOpen, drawerOptions, toogleDrawerOpen, setDrawerOptions: handleSetDrawerOptions}}>   
-			{ props.children }
+			<div className='div-container-master'>
+				{ props.children }
+			</div>
 		</DrawerContext.Provider>
 	);
 };

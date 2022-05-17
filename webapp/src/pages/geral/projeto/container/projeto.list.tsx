@@ -8,7 +8,7 @@ type Props = {
 	propsBarraFerramentas?: any;
 };
 
-export const ProjetoList: React.FC<Props> = (props) => {
+export const ProjetoList: React.FC = () => {
 
 	return <ProjetoGrid />;
 };

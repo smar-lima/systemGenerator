@@ -1,4 +1,4 @@
-import { ProjetoGrid } from './components/projeto.grid';
+import { ProjetoList } from './container/projeto.list';
 import { ProjetoNew } from './container/projeto.new';
 import RouteType from '../../../shared/types/route.types';
 
@@ -9,7 +9,7 @@ const routes: Array<RouteType> = [
 		name: 'app.geral.projeto',
 		path: `${base}`,
 		accessControl: false,
-		element: <ProjetoGrid />,
+		element: <ProjetoList />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projetos' }],
 	},
 	{

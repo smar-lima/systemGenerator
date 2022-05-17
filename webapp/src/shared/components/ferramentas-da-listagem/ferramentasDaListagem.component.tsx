@@ -48,7 +48,10 @@ export const FerramentasDaListagem: React.FC<IFerramentasDaListagemProps> = ({
 										<SyncIcon/>
 									</IconButton>
 								</Tooltip>
-								<Divider orientation='vertical' style={{marginLeft:'10px', marginRight: '10px'}}/>
+								{
+									mostrarBotaoNovo &&
+									<Divider orientation='vertical' style={{marginLeft:'10px', marginRight: '10px'}}/>
+								}
 							</Box>
 						</>
 					}

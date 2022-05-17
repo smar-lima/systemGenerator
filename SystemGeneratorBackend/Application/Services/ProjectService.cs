@@ -29,7 +29,17 @@ namespace Application.Services
         }
         public async Task<List<Project>> GetAll()
         {
-            var projects = _projectRepository.GetAllReadOnly().ToList();
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+
+            var projects = new List<Project>();
+
+            await Task.Delay(4000).ContinueWith(async (t) =>
+            {
+                projects = _projectRepository.GetAllReadOnly().ToList();
+            }, cancellationToken);
+
+            
 
             return projects;
         }
