@@ -63,4 +63,5 @@ export const ProjetoGrid: React.FC = () => {
 			{...config}
 		/>
 	);
+	
 };
