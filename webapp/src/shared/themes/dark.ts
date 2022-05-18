@@ -127,6 +127,13 @@ export const DarkTheme = createTheme({
 					},
 				}
 			}
+		},
+		MuiFormControl:{
+			styleOverrides:{
+				root:{
+					minWidth: '100%'
+				}
+			}
 		}
 	}
 });

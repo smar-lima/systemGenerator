@@ -1,25 +1,37 @@
 import { toast } from 'react-toastify';
+import { AppDispatch } from '../../../../store';
 import api from '../service/projeto.api';
+import { resetProjeto } from './projeto.slice';
 
-/*export const criar = () => {
-''
+export const createProjeto = async (dto: any, dispatch: AppDispatch) => {
+
+	const newDto = {
+		Name: dto.nome,
+		Location: dto.endereco
+	};
+
+	try {
+		const resp = await api.create(newDto);
+		if(resp.status === 201){
+			toast.success('Projeto cadastrado com sucesso');
+			history.back();
+			dispatch(resetProjeto());
+		}else{
+			toast.error('Erro ao tentar cadastrado o projeto');
+		}
+	} catch (error: any) {
+		console.error(error.message);
+		toast.error('Erro ao tentar cadastrado o projeto');
+	}
 };
 
-export const atualizar = () => {
+/*export const atualizar = () => {
 ''
 };*/
 
-export const deletar = async ({id,reloadGrid}: any) => {
+export const deleteProjeto = async (id: number) => {
 	try {
-		await api.delete(id).then(async (response) => {
-			if(response.status === 204){
-				toast.success('Projeto excluido com sucesso');
-				reloadGrid();
-			}else {
-				toast.error('Erro ao tentar excluir o projeto');
-				console.log('erro aqui');
-			}
-		});
+		return await api.delete(id);
 	} catch (error: any) {
 		console.error(error.message);
 		toast.error(error.message);

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import  {Table}  from '../../../../shared/components/table/table';
 import GridProjetoDDados from '../projeto.table.ddados';
 import api from '../service/projeto.api';
-import { deleteProjeto } from '../store/projeto.slice';
+import { deleteProjeto } from '../store/projeto.request';
 
 
 const urlBase = '/app/geral/projeto';

@@ -9,8 +9,8 @@ export default {
 	getById(id: any) {
 		return service.get(`${base}/${id}`);
 	},
-	create(param: any) {
-		return service.post(`${base}`, param);
+	create(dto: any) {
+		return service.post(`${base}`, dto);
 	},
 	update(param: any) {
 		return service.put(`${base}`, param);

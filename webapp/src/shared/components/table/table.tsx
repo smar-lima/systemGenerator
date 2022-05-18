@@ -43,12 +43,14 @@ export const Table = ({
 	const [filtroGrid, setFiltroGrid] = useState({page:0,pageSize:10,filter:{}});
 
 	const onConfirmModalDelete = async () => {
-		await dispatch(
-			itemToDelete.actionDelete({
-				id: itemToDelete.id,
-				reloadGrid: buscarDadosGrid
-			})
-		);
+		await itemToDelete.actionDelete(itemToDelete.id).then(async (response:any) => {
+			if(response.status === 204){
+				toast.success('Item excluido com sucesso');
+				buscarDadosGrid(filtroGrid);
+			}else {
+				toast.error('Erro ao tentar excluir.');
+			}
+		});
 		setItemToDelete(undefined);
 		setOpenModalDelete(false);
 	};

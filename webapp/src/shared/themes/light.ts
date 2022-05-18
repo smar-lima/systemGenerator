@@ -107,5 +107,12 @@ export const LightTheme = createTheme({
 				}
 			}
 		},
+		MuiFormControl:{
+			styleOverrides:{
+				root:{
+					minWidth: '100%'
+				}
+			}
+		}
 	}
 });

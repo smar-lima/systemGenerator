@@ -25,8 +25,8 @@ export const FormFooterBottons: React.FC<IFormFooterBottonsProps> = ({
 		>
 			<Box 
 				gap={1}
-				padding={1.5}
-				paddingX={1}
+				padding={4}
+				paddingX={2}
 				display='flex'
 				alignItems={'center'}
 				height={theme.spacing(2)}

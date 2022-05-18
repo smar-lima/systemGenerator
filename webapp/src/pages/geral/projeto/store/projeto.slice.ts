@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deletar } from './projeto.request';
-
+import { RootState } from '../../../../store';
 
 const initialState = {
+
 	id: 1,
-	nome: 'teste',
-	endereco: 'teste e',
+	nome: '',
+	endereco: '',
 };
 
 export const slice = createSlice({
@@ -21,18 +21,14 @@ export const slice = createSlice({
 		resetProjeto() {
 			return initialState;
 		},
-		deleteProjeto(state, {payload}) {
-			deletar(payload);
-		}
 	}
 });
 
 export const {
 	setProjeto,
-	resetProjeto,
-	deleteProjeto
+	resetProjeto
 } = slice.actions;
 
-export const selectProjeto = (state: any) => state.projeto;
+export const selectProjeto = (state: RootState) => state.projeto;
 
 export default slice.reducer;
