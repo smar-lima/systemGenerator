@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export const montaAcoes = (actions: any, columns: any, setItemToDelete: any, setOpenModalDelete: any) => {
 
-	const confirmExclude = (itemToDelete: any, actionDelete: any) => {
+	const confirmDelete = (itemToDelete: any, actionDelete: any) => {
 		const dtoToDelete = {
 			id: itemToDelete.id,
 			actionDelete: actionDelete
@@ -36,30 +36,29 @@ export const montaAcoes = (actions: any, columns: any, setItemToDelete: any, set
 							<Tooltip title={'Visualizar'} placement="top">
 								<GridActionsCellItem
 									icon={<VisualizarIcon/>} 
-									onClick={() => console.log('dataItem visualizar', item)}
+									onClick={() => action.onClick(item.id)}
 									label={action.type}
 								/>
 							</Tooltip>
 						);
-					if(action.type === 'editar')
+					if(action.type === 'editar'){
 						acoes.push(
 							<Tooltip title={'Editar'} placement="top">
 								<GridActionsCellItem 
 									icon={<EditIcon />} 
 									label={action.type} 
-									onClick={() => console.log('item 1 editar', item)}
+									onClick={() => action.onClick(item.id)}
 								/>
 							</Tooltip>
 						);
+					}
 					if(action.type === 'deletar')
 						acoes.push(
 							<Tooltip title={'Excluir'} placement="top">
 								<GridActionsCellItem 
 									icon={<DeleteIcon />} 
 									label={action.type}
-									onClick={async () => {
-										confirmExclude(item, action.onClick);
-									}}
+									onClick={() => confirmDelete(item, action.onClick)}
 								/>
 							</Tooltip>
 						);
@@ -67,11 +66,7 @@ export const montaAcoes = (actions: any, columns: any, setItemToDelete: any, set
 				return acoes;
 			}
 		};
-        
-		
 		cols = [...columns, columAction];
-		
 	}
-
 	return cols;
 };

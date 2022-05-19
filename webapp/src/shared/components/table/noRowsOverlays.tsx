@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import { useAppThemeContext } from '../../contexts';
+import { useAppThemeContext } from '../../contexts/themeContext';
 
 const { themeName } = useAppThemeContext();
 
-const StyledGridOverlay = styled('div')(({ theme }) => ({
+const StyledGridOverlay = styled('div')(() => ({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',

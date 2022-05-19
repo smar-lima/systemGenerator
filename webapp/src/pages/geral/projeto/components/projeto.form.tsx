@@ -1,76 +1,60 @@
-import { Box, CardContent, FormControl, Grid, Paper, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import { FC, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import Form from '../../../../shared/components/form';
-import * as Yup from 'yup';
-import { FC, PropsWithChildren, useCallback, useEffect } from 'react';
-import { projetoYupResolver } from '../projeto.validate';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectProjeto, setProjeto } from '../store/projeto.slice';
-import { useDeepCompareEffect } from 'react-use';
-import { FormFooterBottons } from '../../../../shared/components';
+import { FormFooterBottons } from '../../../../shared/components/form-footer-bottons/formFooterBottons.component';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { createProjeto } from '../store/projeto.request';
+import { getProjetoById } from '../store/projeto.request';
+import { useParams } from 'react-router-dom';
+import { YupResolver } from '../../../../shared/hooks/YupResolverDefault';
+import { Box, Grid, Paper, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { produtoEsquemaValidate } from '../projeto.validate';
 
-export const produtoEsquema: any = Yup.object({
-	nome: Yup.string().required('Campo Obrigatório'),
-	endereco: Yup.string().required('Campo Obrigatório')
-});
+interface IPropsForm {
+	onSubmit?: any;
+	prefix: string;
+}
 
-export const ProjetoForm: any = (props: any) => {
+export const ProjetoForm: FC<IPropsForm> = ({
+	onSubmit,
+	prefix
+}) => {
 
 	const theme = useTheme();
 
 	const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 	const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
-	const resolver = projetoYupResolver(produtoEsquema);
-
 	const dispatch = useAppDispatch();
+	const { id } = useParams();
+	const isView = prefix === 'V';
+
 	const {
-		register,
 		handleSubmit,
 		setValue,
-		getValues,
 		formState: { errors },
-		control,
-		watch,
 	} = useForm({
 		defaultValues: useAppSelector(selectProjeto),
-		resolver: resolver
+		resolver: YupResolver(produtoEsquemaValidate)
 	});
 
 	const projeto = useAppSelector(selectProjeto);
 
 	const onChange = async (data: any) => {
-		console.log('data',data);
-		await Object.entries(data).forEach(async ([key, value]: [string, any]) => {
-			console.log('key: ', key);
-			console.log('value: ', value);
-			await setValue(key.toString(), value);
-		});
+		await Object.entries(data).
+			forEach(async ([key, value]: [string, any]) => {
+				await setValue(key.toString(), value);
+			});
 		await dispatch(setProjeto(data));
-		
-		console.log('projeto',projeto);
 	};
 
 	useEffect(() => {
 		async function init() {
-			/*const {
-				match: { params },
-			}: any = props;
-			if (params.id) {
-				console.log('params', params.id);
-				//await buscarProjetoById(params.id);
-			}*/
+			if (prefix === 'E' || prefix === 'V') 
+				await getProjetoById(id, dispatch);
 		}
 		init();
 	}, []);
-
-	const onSubmit = async (dados: any) => {
-		console.log('dados',dados);
-		createProjeto(dados, dispatch);
-		//dispatch(asyncCreate(dados));
-	};
 
 	return (
 		<>
@@ -110,26 +94,36 @@ export const ProjetoForm: any = (props: any) => {
 						<Grid container spacing={2}  alignItems='flex-start'>
 							<Grid item xs={4}>
 								<TextField
-									name='nome'
+									name='name'
 									label='Nome*'
 									variant='standard'
-									value={projeto.nome}
+									value={projeto.name}
+									disabled={isView}
 									onChange={(e) => onChange({
 										...projeto,
-										nome:e.target.value
+										name:e.target.value
 									})}
+									error={errors.name}
+									helperText={
+										errors.name?.message
+									}
 								/>
 							</Grid>
 							<Grid item xs={6}>
 								<TextField
-									name='endereco'
+									name='location'
 									label='Endereço*'
 									variant='standard'
-									value={projeto.endereco}
+									value={projeto.location}
+									disabled={isView}
 									onChange={(e) => onChange({
 										...projeto,
-										endereco:e.target.value
+										location:e.target.value
 									})}
+									error={errors.location}
+									helperText={
+										errors.location?.message
+									}
 								/>
 							</Grid>
 						</Grid>

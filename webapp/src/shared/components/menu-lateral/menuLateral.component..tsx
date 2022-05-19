@@ -19,7 +19,7 @@ import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import {BarraSuperior} from '../barra-superior/barraSuperior.component';
-import {useAppThemeContext, useDrawerContext} from '../../contexts';
+import { useDrawerContext } from '../../contexts/drawerContext';
 import { useMatch, useNavigate, useResolvedPath, useLocation } from 'react-router-dom';
 import  {MenuList}  from '../../../menu';
 import { SvgIconComponent } from '@mui/icons-material';
@@ -30,6 +30,7 @@ import VoltarIcon from '@mui/icons-material/ArrowBack';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import MainContainer from '../../layouts/mainContainer';
+import { useAppThemeContext } from '../../contexts/themeContext';
 interface IListItemLinkProps {
 	label: string;
 	Icone: SvgIconComponent ;

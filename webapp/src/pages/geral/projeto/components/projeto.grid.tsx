@@ -18,17 +18,17 @@ export const ProjetoGrid: React.FC = () => {
 	const actions = [
 		{
 			type: 'visualizar',
-			onClick: (dataItem: any) => navigate(`${urlBase}/view/${dataItem}`),
+			onClick: (id: number) => navigate(`${urlBase}/view/${id}`),
 			url: `${urlBase}/view/:id`,
 		},
 		{
 			type: 'editar',
-			onClick: (dataItem: any) => navigate(`${urlBase}/edit/${dataItem}`),
+			onClick: (id: number) => navigate(`${urlBase}/edit/${id}`),
 			url: `${urlBase}/edit/:id`,
 		},
 		{
 			type: 'deletar',
-			onClick: (id: any)=> deleteProjeto(id),
+			onClick: (id: number)=> deleteProjeto(id),
 			url: `${urlBase}/delete/:id`,
 		},
 	];

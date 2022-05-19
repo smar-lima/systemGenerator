@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuSimples} from '../menu-simples/menuSimples';
 import { Grid } from '@mui/material';
-import { useDrawerContext } from '../../contexts';
+import { useDrawerContext } from '../../contexts/drawerContext';
 
 
 export const BarraSuperior = (props: { open: boolean | undefined,  handleDrawerOpen: any;}) => {

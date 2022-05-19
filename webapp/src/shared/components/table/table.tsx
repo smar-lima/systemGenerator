@@ -4,14 +4,13 @@ import {
 	GridColumns,
 	ptBR
 } from '@mui/x-data-grid';
-import { Box, Paper, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
 import {ITableProps} from '../../types/tableDados.types';
 import {  useEffect, useMemo, useState } from 'react';
 import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
 import { Environment } from '../../environment';
-import { useDispatch } from 'react-redux';
 import { FerramentasDaListagem } from '../ferramentas-da-listagem/ferramentasDaListagem.component';
-import { useAppThemeContext } from '../../contexts';
+import { useAppThemeContext } from '../../contexts/themeContext';
 import { CustomNoRowsOverlay } from './noRowsOverlays';
 import { LoadingSkeleton } from './tableLoadSkeleton';
 import { montaAcoes } from './acoesGridHelper';
@@ -27,14 +26,12 @@ export const Table = ({
 	toolbar
 }: ITableProps) => {
 	
-	const dispatch = useDispatch();
 	const theme = useTheme();
 	const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 	const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
 	const [ contRender, setContRender ] = useState(0);
 	const [ data, setData ] = useState([]);
-	const [ loadInit, setLoadInit ] = useState(false);
 	const [ loadGrid, setLoadGrid ] = useState(false);
 	const [ newColumns, setNewColumns ] = useState<GridColumns>([]);
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
@@ -61,7 +58,6 @@ export const Table = ({
 	};
 
 	const buscarDadosGrid = async (filtro: any) => {
-		console.log('ent');
 		await setData([]);
 		await setTimeout(() => {
 			setLoadGrid(true);
@@ -71,10 +67,9 @@ export const Table = ({
 		if(response.status === 200){
 			await setData(response.data);
 			await setLoadGrid(false);
-			await setLoadInit(false);
 			return true;
 		}else {
-			await setLoadInit(false);
+			await setLoadGrid(false);
 			return false;
 		}
 	};
@@ -93,23 +88,21 @@ export const Table = ({
 		async function init(){
 			try {
 				if(options?.buscarAoRenderizar){
-					await setLoadInit(true);
+					await setLoadGrid(true);
 					await buscarDadosGrid(filtroGrid);
 				}
-				await montarListaAcoes();
 			} catch (error: any) {
 				toast.error('Erro ao tentar buscar os dados da listagem.');
-				await montarListaAcoes();
-				await setLoadInit(false);
+				await setLoadGrid(true);
 			}
 		}
 		init();
+		montarListaAcoes();
 	},[]);
 	
 	useMemo(
 		async () => {
 			if(contRender > 1){
-				console.log('filterGrid',filtroGrid);
 				await buscarDadosGrid(filtroGrid);
 			}
 			setContRender(contRender + 1);
@@ -149,90 +142,86 @@ export const Table = ({
 						mostrarInputBusca={false}
 						aoClicarBotaoNovo={() => toolbar?.novo?.onClick()}
 						aoClicarBotaoAtualizar={() => buscarDadosGrid(filtroGrid)}
-						loading={loadInit}
-					/>
-				</Box>
-			}
-			{ !loadInit && 
-				<Box 
-					gap={1}
-					padding={2}
-					paddingX={2}
-					component={Paper}
-					display={'flex'}
-					sx={{ height: '510px', margin: '0 auto 16px' }}
-				>
-					<DataGrid 
-						rows={data} 
-						rowCount={data.length}
-						columns={[...newColumns]}
-						rowsPerPageOptions={[5, 10, 20, 50, 100]}
-						checkboxSelection={options?.selected}
 						loading={loadGrid}
-						filterMode="server"
-						paginationMode="server"
-						onFilterModelChange={
-							(filterModel) => setFiltroGrid({ 
-								...filtroGrid, 
-								filter:{
-									columnField:filterModel?.items[0]?.columnField, 
-									operatorValue:filterModel?.items[0]?.operatorValue, 
-									value:filterModel?.items[0]?.value, 
-								}})
-						}
-						onPageChange={(newPage) => setFiltroGrid({...filtroGrid, page:newPage})}
-						onPageSizeChange={(newPageSize) => setFiltroGrid({...filtroGrid, pageSize:newPageSize})}
-						pagination
-						page={filtroGrid.page}
-						pageSize={filtroGrid.pageSize}
-						initialState={{
-							sorting: {
-								sortModel: order
-							},
-							filter: {
-								filterModel: {
-									items: filterInit
-								},
-							},
-							pagination: {
-								pageSize: 10,
-							}
-						}}
-						sx={ themeName === 'light' ? {
-							'& .MuiDataGrid-columnHeaders': {
-								color: theme.palette.background.paper,
-								background: theme.palette.primary.main,
-								'& .MuiSvgIcon-root':{
-									color: theme.palette.secondary.light
-								}
-							},
-							'& .MuiDataGrid-toolbarContainer':{
-								marginTop: '5px'
-							}
-						} :	{
-							'& .MuiDataGrid-columnHeaders': {
-								color: theme.palette.text.secondary,
-								background: theme.palette.secondary.contrastText,
-								'& .MuiSvgIcon-root':{
-									color: theme.palette.text.secondary
-								}
-							},
-							'& .MuiDataGrid-toolbarContainer':{
-								marginTop: '5px'
-							}
-						}}
-						components={{
-							Toolbar: GridToolbar,
-							LoadingOverlay: LoadingSkeleton,
-							NoRowsOverlay: CustomNoRowsOverlay
-						}}
-						localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
 					/>
 				</Box>
 			}
-			{ loadInit &&
-				<Skeleton style={{marginTop: '-6%'}} width={'100%'} height={'600px'}/>
-			}
+			<Box 
+				gap={1}
+				padding={2}
+				paddingX={2}
+				component={Paper}
+				display={'flex'}
+				sx={{ height: '510px', margin: '0 auto 16px' }}
+			>
+				<DataGrid 
+					rows={data} 
+					rowCount={data.length}
+					columns={[...newColumns]}
+					rowsPerPageOptions={[5, 10, 20, 50, 100]}
+					checkboxSelection={options?.selected}
+					loading={loadGrid}
+					filterMode="server"
+					paginationMode="server"
+					onFilterModelChange={
+						(filterModel) => setFiltroGrid({ 
+							...filtroGrid, 
+							filter:{
+								columnField:filterModel?.items[0]?.columnField, 
+								operatorValue:filterModel?.items[0]?.operatorValue, 
+								value:filterModel?.items[0]?.value, 
+							}})
+					}
+					onPageChange={(newPage) => setFiltroGrid({...filtroGrid, page:newPage})}
+					onPageSizeChange={(newPageSize) => setFiltroGrid({...filtroGrid, pageSize:newPageSize})}
+					pagination
+					page={filtroGrid.page}
+					pageSize={filtroGrid.pageSize}
+					initialState={{
+						sorting: {
+							sortModel: order
+						},
+						filter: {
+							filterModel: {
+								items: filterInit
+							},
+						},
+						pagination: {
+							pageSize: 10,
+						}
+					}}
+					sx={ themeName === 'light' ? {
+						'& .MuiDataGrid-columnHeaders': {
+							color: theme.palette.background.paper,
+							background: theme.palette.primary.main,
+							'& .MuiSvgIcon-root':{
+								color: theme.palette.secondary.light
+							}
+						},
+						'& .MuiDataGrid-toolbarContainer':{
+							marginTop: '5px'
+						}
+					} :	{
+						'& .MuiDataGrid-columnHeaders': {
+							color: theme.palette.text.secondary,
+							background: theme.palette.secondary.contrastText,
+							'& .MuiSvgIcon-root':{
+								color: theme.palette.text.secondary
+							}
+						},
+						'& .MuiDataGrid-toolbarContainer':{
+							marginTop: '5px'
+						}
+					}}
+					components={{
+						Toolbar: GridToolbar,
+						LoadingOverlay: LoadingSkeleton,
+						NoRowsOverlay: CustomNoRowsOverlay
+					}}
+					localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
+				/>
+			</Box>
+			
 			{
 				openModalDelete &&
 				<AlertConfimModal

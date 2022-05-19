@@ -1,6 +1,8 @@
 import { ProjetoList } from './container/projeto.list';
 import { ProjetoNew } from './container/projeto.new';
 import RouteType from '../../../shared/types/route.types';
+import { ProjetoEdit } from './container/projeto.edit';
+import { ProjetoView } from './container/projeto.view';
 
 const base = '/app/geral/projeto';
 
@@ -21,16 +23,16 @@ const routes: Array<RouteType> = [
 	}, 
 	{
 		name: 'app.geral.projeto.edit',
-		path: `${base}/addedit/:id`,
+		path: `${base}/edit/:id`,
 		accessControl: false,
-		element: <ProjetoNew />,
+		element: <ProjetoEdit />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' },{ text: 'Edição' }]
 	},
 	{
 		name: 'app.geral.projeto.view',
 		path: `${base}/view/:id`,
 		accessControl: false,
-		element: <ProjetoNew />,
+		element: <ProjetoView />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' },{ text: 'Visualização' }],
 	},
 ];

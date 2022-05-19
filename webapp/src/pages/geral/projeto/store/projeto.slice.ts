@@ -2,10 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../../store';
 
 const initialState = {
-
-	id: 1,
-	nome: '',
-	endereco: '',
+	id: undefined,
+	name: '',
+	location: '',
 };
 
 export const slice = createSlice({
@@ -18,7 +17,7 @@ export const slice = createSlice({
 				...payload
 			};
 		},
-		resetProjeto() {
+		resetForm() {
 			return initialState;
 		},
 	}
@@ -26,7 +25,7 @@ export const slice = createSlice({
 
 export const {
 	setProjeto,
-	resetProjeto
+	resetForm
 } = slice.actions;
 
 export const selectProjeto = (state: RootState) => state.projeto;

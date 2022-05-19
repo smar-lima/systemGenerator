@@ -4,7 +4,7 @@ import VoltarIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import { red } from '@mui/material/colors';
-import { useAppThemeContext } from '../../contexts';
+import { useAppThemeContext } from '../../contexts/themeContext';
 
 interface IFerramentasDeDetalhesProps {
 	textoBotaoNovo?: string;

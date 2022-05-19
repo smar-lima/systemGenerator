@@ -12,8 +12,8 @@ export default {
 	create(dto: any) {
 		return service.post(`${base}`, dto);
 	},
-	update(param: any) {
-		return service.put(`${base}`, param);
+	update(id: number, param: any) {
+		return service.put(`${base}/${id}`, param);
 	},
 	ativarDesativar(id: any) {
 		return service.put(`${base}/AtivarDesativar`, id);
