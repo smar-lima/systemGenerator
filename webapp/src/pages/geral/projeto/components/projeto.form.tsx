@@ -29,7 +29,6 @@ export const ProjetoForm: FC<IPropsForm> = ({
 	const {
 		handleSubmit,
 		register,
-		setValue,
 		formState: { errors },
 	} = useForm({
 		defaultValues: useAppSelector(selectProjeto),
@@ -53,18 +52,7 @@ export const ProjetoForm: FC<IPropsForm> = ({
 		}
 		init();
 	},[]);
-	/*
-	useEffect(() => {
-		async function updateForm() {
-			console.log('projeto: ', projeto);
-			await Object.entries(projeto).
-				forEach(async ([key, value]: [string, any]) => {
-					await setValue(key.toString(), value);
-				});
-		}
-		updateForm();
-	},[projeto]);
-*/
+
 	return (
 		<>
 			<Form
@@ -80,6 +68,7 @@ export const ProjetoForm: FC<IPropsForm> = ({
 						name='name'
 						label='Nome*'
 						variant='standard'
+						value={projeto.name}
 						disabled={isView}
 						onChange={(e) => onChange({
 							...projeto,
@@ -98,6 +87,7 @@ export const ProjetoForm: FC<IPropsForm> = ({
 						name='location'
 						label='Endereço*'
 						variant='standard'
+						value={projeto.location}
 						disabled={isView}
 						onChange={(e) => onChange({
 							...projeto,
