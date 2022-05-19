@@ -1,6 +1,6 @@
 import style from 'styled-components';
 
-const Form = style.form`
+const Formm = style.form`
 `;
 
-export default Form;
+export default Formm;

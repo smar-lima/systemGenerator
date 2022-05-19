@@ -103,14 +103,26 @@ export const LightTheme = createTheme({
 						border: '3px',
 						borderStyle: 'solid',
 						borderColor: green[700]
+					},
+					'&.MuiFormControl':{
+						minWidth: '100%',
+						styleOverrides:{
+							root:{
+								minWidth: '100%'
+							}
+						}
 					}
 				}
 			}
 		},
-		MuiFormControl:{
+		MuiGrid:{
 			styleOverrides:{
 				root:{
-					minWidth: '100%'
+					'&.MuiGrid-item':{
+						'.MuiFormControl-root':{
+							minWidth: '100%'
+						}
+					},
 				}
 			}
 		}

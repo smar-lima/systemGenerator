@@ -4,7 +4,6 @@ import GridProjetoDDados from '../projeto.table.ddados';
 import api from '../service/projeto.api';
 import { deleteProjeto } from '../store/projeto.request';
 
-
 const urlBase = '/app/geral/projeto';
 
 export const ProjetoGrid: React.FC = () => {

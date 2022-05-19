@@ -34,7 +34,7 @@ namespace Application.Services
 
             var projects = new List<Project>();
 
-            await Task.Delay(4000).ContinueWith(async (t) =>
+            await Task.Delay(500).ContinueWith(async (t) =>
             {
                 projects = _projectRepository.GetAllReadOnly().ToList();
             }, cancellationToken);
@@ -44,7 +44,14 @@ namespace Application.Services
 
         public async Task<Project> Get(long id)
         {
-            var project = await _projectRepository.GetByIdAsync(id);
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+
+            var project = new Project("m","m");
+            await Task.Delay(500).ContinueWith(async (t) =>
+            {
+                project = await _projectRepository.GetByIdAsync(id);
+            }, cancellationToken);
 
             return project;
         }

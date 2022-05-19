@@ -42,10 +42,10 @@ export const Table = ({
 	const onConfirmModalDelete = async () => {
 		await itemToDelete.actionDelete(itemToDelete.id).then(async (response:any) => {
 			if(response.status === 204){
-				toast.success('Item excluido com sucesso');
+				toast.success(Environment.EXCLUIDO_COM_SUCESSO);
 				buscarDadosGrid(filtroGrid);
 			}else {
-				toast.error('Erro ao tentar excluir.');
+				toast.error(Environment.ERRO_AO_DELETAR);
 			}
 		});
 		setItemToDelete(undefined);
@@ -59,9 +59,7 @@ export const Table = ({
 
 	const buscarDadosGrid = async (filtro: any) => {
 		await setData([]);
-		await setTimeout(() => {
-			setLoadGrid(true);
-		}, 100);
+		setLoadGrid(true);
 		
 		const response = await options.service(filtro);
 		if(response.status === 200){
@@ -204,7 +202,7 @@ export const Table = ({
 					} :	{
 						'& .MuiDataGrid-columnHeaders': {
 							color: theme.palette.text.secondary,
-							background: theme.palette.secondary.contrastText,
+							background: theme.palette.secondary.main,
 							'& .MuiSvgIcon-root':{
 								color: theme.palette.text.secondary
 							}

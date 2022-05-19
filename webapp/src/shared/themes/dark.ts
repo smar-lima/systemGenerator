@@ -15,7 +15,7 @@ export const DarkTheme = createTheme({
 		secondary:{
 			main: grey[700],
 			dark: grey[800],
-			light: grey[500],
+			light: grey[400],
 			contrastText: '#ffffff',
 		},
 		background:{
@@ -128,10 +128,14 @@ export const DarkTheme = createTheme({
 				}
 			}
 		},
-		MuiFormControl:{
+		MuiGrid:{
 			styleOverrides:{
 				root:{
-					minWidth: '100%'
+					'&.MuiGrid-item':{
+						'.MuiFormControl-root':{
+							minWidth: '100%'
+						}
+					},
 				}
 			}
 		}

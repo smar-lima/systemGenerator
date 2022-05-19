@@ -18,7 +18,7 @@ const GridProjetoDDados: GridDDados = {
 		{ 
 			field: 'id', 
 			headerName: 'Projeto', 
-			flex: 1,
+			width: 150
 		},
 		{ 
 			field: 'name', 

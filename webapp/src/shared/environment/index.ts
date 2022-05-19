@@ -18,7 +18,7 @@ export const Environment = {
 	/**
      * Define mensagem padrão quando a entidade é salva com sucesso.
      */
-	SALVO_COM_SUCESSO: 'Salvo com sucesso.',
+	SALVO_COM_SUCESSO: 'Cadastro realizado com sucesso.',
 	/**
      * Define mensagem padrão quando a entidade é atualizada com sucesso.
      */
@@ -30,10 +30,22 @@ export const Environment = {
 	/**
      * Define mensagem padrão quando a entidade é excluida com sucesso.
      */
-	ERRO_AO_DELETAR: 'Ocorreu um erro ao tentar apagar ',
+	CONFIRMACAO_DELETE: 'Deseja realmente excluir este item?',
 	/**
-     * Define mensagem padrão quando a entidade é excluida com sucesso.
+     * Define mensagem padrão quando a um erro ao excluir a entidade.
      */
-	CONFIRMACAO_DELETE: 'Deseja realmente excluir este item?'
+	ERRO_AO_DELETAR: 'Ocorreu um erro ao tentar apagar o item.',
+	/**
+     * Define mensagem padrão quando a um erro ao atualizar a entidade.
+     */
+	ERRO_AO_CADASTRAR: 'Ocorreu um erro ao tentar cadastrar o item.',
+	/**
+     * Define mensagem padrão quando a um erro ao atualizar a entidade.
+     */
+	ERRO_AO_ATUALIZAR: 'Ocorreu um erro ao tentar atualizar o item.',
+	/**
+     * Define mensagem padrão quando a um erro ao atualizar a entidade.
+     */
+	ERRO_AO_BUSCAR: 'Ocorreu um erro ao tentar buscar o item.',
 };
 

@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 
 interface IFormFooterBottonsProps {
-    desabilitaSubmit?: boolean;
-    rotaVoltar?: string
+    isView?: boolean;
+    rotaVoltar?: string;
+	prefix?: string;
 }
 export const FormFooterBottons: React.FC<IFormFooterBottonsProps> = ({
-	desabilitaSubmit = false,
-	rotaVoltar
+	isView = false,
+	rotaVoltar,
+	prefix = 'I'
 }) => {
 
 	const navigate = useNavigate();
@@ -45,14 +47,14 @@ export const FormFooterBottons: React.FC<IFormFooterBottonsProps> = ({
 				>
                     Voltar
 				</Button>
-				{!desabilitaSubmit && (
+				{!isView && (
 					<Button
 						variant='contained'
 						color='primary'
 						type='submit'
 						size='medium'
 					>
-                        Confirmar
+						{prefix === 'I' ? 'Cadastrar' : 'Salvar'}
 					</Button>
 				)}
 			</Box>
