@@ -4,7 +4,7 @@ import { resetForm, selectProjeto, setProjeto } from '../store/projeto.slice';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { deleteProjeto, getProjetoById } from '../store/projeto.request';
 import { useNavigate, useParams } from 'react-router-dom';
-import { YupResolver } from '../../../../shared/hooks/YupResolverDefault';
+import { YupResolver } from '../../../../shared/hooks/yupResolverDefault';
 import { Grid, TextField } from '@mui/material';
 import { produtoEsquemaValidate } from '../projeto.validate';
 import { Form } from '../../../../shared/components/form/form';
