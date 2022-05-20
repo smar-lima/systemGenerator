@@ -9,8 +9,7 @@ import {
 import { IFerramentasDeDetalhesProps } from '../../types/formDados.types';
 import { FerramentasDeDetalhes } from '../ferramentas-de-detalhe/ferramentaDetalhe.component';
 import { FormFooterBottons } from '../form-footer-bottons/formFooterBottons.component';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../store';
 
 interface IForm {
@@ -30,7 +29,7 @@ export const Form: React.FC<IForm> = ({
 	onSubmit,
 	prefix,
 	titulo,
-	resetForm
+	resetForm,
 }) => {
 
 	const theme = useTheme();
@@ -55,62 +54,74 @@ export const Form: React.FC<IForm> = ({
 	};
 	
 	useEffect(() => {
+		/*document.addEventListener('click', e => {
+			if (!e?.target?.closest('.form-container')) return;
+			console.log(e.target);
+		});
+		
+		function clicked() {
+			console.log(1);
+		}*/
+
 		return () => {
 			dispatch(resetForm());
 		};
 	},[]);
+	
 
 	return (
 		<>
-			<Box padding={2} display='flex' flexDirection='column' gap={1}>
-				{
-					titulo &&
-					<Box padding={1}  
-						display='flex' 
-						alignItems="center" 
-						gap={1} 
-						justifyContent="center" 
-						height={theme.spacing(smDown ? 2 : mdDown ? 3 : 5)}
-					>
-						<Typography 
-							whiteSpace="nowrap"
-							overflow="hidden"
-							textOverflow="ellipsis"
-							variant={smDown ? 'h6' : mdDown ? 'h5' : 'h4'}
+			<div className={'form-container'}>
+				<Box padding={2} display='flex' flexDirection='column' gap={1}>
+					{
+						titulo &&
+						<Box padding={1}  
+							display='flex' 
+							alignItems="center" 
+							gap={1} 
+							justifyContent="center" 
+							height={theme.spacing(smDown ? 2 : mdDown ? 3 : 5)}
 						>
-							{
-								prefixTitulo + 
-								' de ' + 
-								titulo
-							}
-						</Typography>
-					</Box>
-				}
-			</Box>
-			{
-				toolbar &&
-				<FerramentasDeDetalhes
-					{...newTollbar}
-				/>
-			}
-			<form
-				onSubmit={onSubmit}
-			>
-				<Box 
-					component={Paper}
-					marginLeft={2}
-					marginRight={2}
-					padding={2}
-					paddingX={2}
-				>
-					<Box sx={{ flexGrow: 1 }}>
-						<Grid container spacing={2}  alignItems='flex-start'>
-							{children}
-						</Grid>
-					</Box>
+							<Typography 
+								whiteSpace="nowrap"
+								overflow="hidden"
+								textOverflow="ellipsis"
+								variant={smDown ? 'h6' : mdDown ? 'h5' : 'h4'}
+							>
+								{
+									prefixTitulo + 
+									' de ' + 
+									titulo
+								}
+							</Typography>
+						</Box>
+					}
 				</Box>
-				<FormFooterBottons isView={isView}/>
-			</form>
+				{
+					toolbar &&
+					<FerramentasDeDetalhes
+						{...newTollbar}
+					/>
+				}
+				<form
+					onSubmit={onSubmit}
+				>
+					<Box 
+						component={Paper}
+						marginLeft={2}
+						marginRight={2}
+						padding={2}
+						paddingX={2}
+					>
+						<Box sx={{ flexGrow: 1 }}>
+							<Grid container spacing={2}  alignItems='flex-start'>
+								{children}
+							</Grid>
+						</Box>
+					</Box>
+					<FormFooterBottons urlListagem={toolbar?.urlListagem} isView={isView}/>
+				</form>
+			</div>
 		</>
 	);
 };

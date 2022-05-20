@@ -7,11 +7,13 @@ interface IFormFooterBottonsProps {
     isView?: boolean;
     rotaVoltar?: string;
 	prefix?: string;
+	urlListagem?: string;
 }
 export const FormFooterBottons: React.FC<IFormFooterBottonsProps> = ({
 	isView = false,
 	rotaVoltar,
-	prefix = 'I'
+	prefix = 'I',
+	urlListagem
 }) => {
 
 	const navigate = useNavigate();
@@ -41,8 +43,10 @@ export const FormFooterBottons: React.FC<IFormFooterBottonsProps> = ({
 					style={{marginRight: '15px'}}
 					onClick={() => {
 						rotaVoltar
-							? ''
-							: navigate(-1);
+							? navigate(rotaVoltar) :
+							urlListagem ? 
+								navigate(urlListagem) : 
+								navigate(-1);
 					}}
 				>
                     Voltar

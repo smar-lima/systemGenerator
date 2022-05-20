@@ -1,10 +1,10 @@
-import { createContext, useContext, useState, useCallback, useMemo } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
 import { Box, ThemeProvider } from '@mui/material';
 import { LightTheme, DarkTheme } from '../themes';
 
 interface IThemeContextData {
 	themeName: 'light' | 'dark';
-	toggleTheme: () => void;
+	toggleTheme: () => void
 }
 
 type ThemeProviderProps = {
@@ -23,12 +23,20 @@ export const AppThemeProvider: any = (props: ThemeProviderProps) => {
 
 	const [themeName, setThemeName] = useState<'light' | 'dark'>('light');
 
+	useEffect(() => {
+		const themeStorage = localStorage.getItem('theme');
+		if(themeStorage !== null && themeStorage !== undefined)
+			setThemeName(themeStorage === 'dark' ? 'dark' : 'light');
+	},[]);
+
 	const toggleTheme = useCallback(() => {
 		setThemeName(oldThemeName => oldThemeName === 'light' ? 'dark' : 'light');
 	},[]);
 
 	const theme = useMemo(() => {
 		if(themeName === 'light') return LightTheme;
+		
+		localStorage.setItem('theme', themeName);
 		
 		return DarkTheme;
 	},[themeName]);
