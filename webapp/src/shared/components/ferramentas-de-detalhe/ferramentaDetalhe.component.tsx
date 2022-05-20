@@ -3,9 +3,10 @@ import AddIcon from '@mui/icons-material/Add';
 import VoltarIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from '@mui/icons-material/Edit';
 import { red } from '@mui/material/colors';
 import { IFerramentasDeDetalhesProps } from '../../types/formDados.types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Environment } from '../../environment';
 import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
@@ -13,22 +14,28 @@ import { useState } from 'react';
 
 export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 	textoBotaoNovo = 'Novo',
+	textoBotaoEditar = 'Editar',
 	textoBotaoSalvar,
 	exibeBotaoNovo = false,
 	exibeBotaoSalvar = true,
 	exibeBotaoExcluir = true,
 	exibeBotaoVoltar = true,
+	exibeBotaoEditar = true,
 	onClickSalvar,
 	onClickNovo,
 	onClickVoltar,
+	onClickEditar,
 	onClickExcluir,
 	loading = false,
+	urlListagem,
 	prefix
 }) => {
 
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
+
+	const { id } = useParams();
 
 	const textoSalvar = textoBotaoSalvar ? textoBotaoSalvar : 
 		prefix === 'I' ? 'Cadastrar' : 'Salvar';
@@ -84,16 +91,41 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 						<Divider orientation='vertical'/>
 					</>
 				)}
-				{(exibeBotaoSalvar && !loading) && (
+				{(exibeBotaoSalvar && !loading && prefix !== 'V') && (
+					console.log('id: ', id),
+					console.log('onClickEditar: ', onClickEditar),
 					<>
 						<Tooltip title={textoSalvar} placement="top">
+							
 							<Fab 
 								size="small" 
 								aria-label="save" 
 								style={{width: '35px', height: '20%'}}
-								onClick={onClickSalvar}
+								//onClick={id ? onClickSalvar : onClickEditar}
+								
 							>
 								<SaveIcon/>
+							</Fab>
+						</Tooltip>
+
+					</>
+				)}
+				{loading && (
+					<>
+						<Skeleton width={'40px'} height={'40px'} variant="circular"/>
+						<Divider orientation='vertical'/>
+					</>
+				)}
+				{(exibeBotaoEditar && !loading && prefix === 'V') && (
+					<>
+						<Tooltip title={textoBotaoEditar} placement="top">
+							<Fab 
+								size="small" 
+								aria-label="edit" 
+								style={{width: '35px', height: '20%'}}
+								onClick={onClickEditar}
+							>
+								<EditIcon/>
 							</Fab>
 						</Tooltip>
 					</>
@@ -131,7 +163,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 								size="small" 
 								aria-label="back" 
 								style={{width: '35px', height: '20%'}}
-								onClick={onClickVoltar ? onClickVoltar : () => navigate(-1)}
+								onClick={onClickVoltar ? onClickVoltar : urlListagem ? () => navigate(urlListagem) : () => navigate(-1)}
 							>
 								<VoltarIcon/>
 							</Fab>

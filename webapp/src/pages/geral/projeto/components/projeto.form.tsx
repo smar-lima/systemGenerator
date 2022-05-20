@@ -11,6 +11,7 @@ import { Form } from '../../../../shared/components/form/form';
 import { IFerramentasDeDetalhesProps } from '../../../../shared/types/formDados.types';
 import { useSelector } from 'react-redux';
 
+const urlListagem = '/app/geral/projeto';
 interface IPropsForm {
 	onSubmit?: any;
 	prefix: string;
@@ -20,7 +21,6 @@ export const ProjetoForm: FC<IPropsForm> = ({
 	onSubmit,
 	prefix
 }) => {
-	
 	
 	useEffect(() => {
 		async function init() {
@@ -51,8 +51,10 @@ export const ProjetoForm: FC<IPropsForm> = ({
 
 	const toolbarForm: IFerramentasDeDetalhesProps = {
 		exibeBotaoNovo: true,
-		onClickNovo: () => navigate('/app/geral/projeto/add'),
+		urlListagem: urlListagem,
+		onClickNovo: () => navigate(`${urlListagem}/add`),
 		onClickExcluir: () => deleteProjeto(id),
+		onClickEditar: () =>  navigate(`${urlListagem}/edit/${id}`),
 	};
 
 	useMemo(() => {
