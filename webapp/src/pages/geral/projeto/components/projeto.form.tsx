@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { resetForm, selectProjeto, setProjeto } from '../store/projeto.slice';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -9,6 +9,7 @@ import { Grid, TextField } from '@mui/material';
 import { produtoEsquemaValidate } from '../projeto.validate';
 import { Form } from '../../../../shared/components/form/form';
 import { IFerramentasDeDetalhesProps } from '../../../../shared/types/formDados.types';
+import { useSelector } from 'react-redux';
 
 interface IPropsForm {
 	onSubmit?: any;
@@ -19,19 +20,28 @@ export const ProjetoForm: FC<IPropsForm> = ({
 	onSubmit,
 	prefix
 }) => {
+	
+	
+	useEffect(() => {
+		async function init() {
+			if (prefix === 'E' || prefix === 'V')
+				await getProjetoById(id, dispatch);
+		}
+		init();
+	},[]);
 
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const projeto = useAppSelector(selectProjeto);
+	const projeto = useSelector((state: any) => state.projeto);
 	const { id } = useParams();
 	const isView = prefix === 'V';
 
 	const {
 		handleSubmit,
-		register,
 		formState: { errors },
+		setValue
 	} = useForm({
-		defaultValues: useAppSelector(selectProjeto),
+		defaultValues: useSelector((state: any) => state.projeto),
 		resolver: YupResolver(produtoEsquemaValidate)
 	});
 
@@ -44,15 +54,17 @@ export const ProjetoForm: FC<IPropsForm> = ({
 		onClickNovo: () => navigate('/app/geral/projeto/add'),
 		onClickExcluir: () => deleteProjeto(id),
 	};
-	
-	useEffect(() => {
-		async function init() {
-			if (prefix === 'E' || prefix === 'V')
-				await getProjetoById(id, dispatch);
-		}
-		init();
-	},[]);
 
+	useMemo(() => {
+		async function updateForm() {
+			await Object.entries(projeto).
+				forEach(async ([key, value]: [string, any]) => {
+					await setValue(key.toString(), value);
+				});
+		}
+		updateForm();
+	},[projeto]);
+	
 	return (
 		<>
 			<Form
@@ -64,8 +76,6 @@ export const ProjetoForm: FC<IPropsForm> = ({
 			>
 				<Grid item xs={6}>
 					<TextField
-						{...register('name')}
-						name='name'
 						label='Nome*'
 						variant='standard'
 						value={projeto.name}
@@ -83,8 +93,6 @@ export const ProjetoForm: FC<IPropsForm> = ({
 				</Grid>
 				<Grid item xs={6}>
 					<TextField
-						{...register('location')}
-						name='location'
 						label='Endereço*'
 						variant='standard'
 						value={projeto.location}

@@ -114,3 +114,10 @@ export const Form: React.FC<IForm> = ({
 		</>
 	);
 };
+
+export const updateForm = async (data: any, setValue:any) => {
+	await Object.entries(data).
+		forEach(async ([key, value]: [string, any]) => {
+			await setValue(key.toString(), value);
+		});
+};
