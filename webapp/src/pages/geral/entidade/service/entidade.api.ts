@@ -1,10 +1,9 @@
 import service from '../../../../shared/api';
 
-const base = '/project';
+const base = '/project/:id/entidade';
 
 export default {
 	async getAll(filtro: any) {
-		console.log('filtro: ', filtro);
 		return service.post(`${base}/filter`,filtro);
 	},
 	getById(id: any) {

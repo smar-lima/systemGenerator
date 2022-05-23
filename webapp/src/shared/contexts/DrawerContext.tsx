@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useCallback } from 'react';
-import { number } from 'yup';
 
 interface IDrowerContextData {
 	isDrawerOpen: boolean;

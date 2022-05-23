@@ -29,6 +29,7 @@ const GridProjetoDDados: GridDDados = {
 			field: 'location', 
 			headerName: 'Endereço', 
 			flex: 1,
+			type: 'date'
 		},
 	],
 };

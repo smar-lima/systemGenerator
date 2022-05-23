@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
-import {MenuSimples} from '../menu-simples/menuSimples';
+import {MenuSimples} from '../menu-simples/menuSimples.component';
 import { Grid } from '@mui/material';
 import { useDrawerContext } from '../../contexts/drawerContext';
 

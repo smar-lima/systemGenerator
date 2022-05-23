@@ -1,21 +1,23 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { 
 	DataGrid,
 	GridToolbar,
 	GridColumns,
 	ptBR
 } from '@mui/x-data-grid';
-import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Paper, Popover, Typography, useMediaQuery, useTheme } from '@mui/material';
 import {ITableProps} from '../../types/tableDados.types';
-import {  useEffect, useMemo, useState } from 'react';
-import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
+import {  MouseEvent, useEffect, useMemo, useState } from 'react';
+import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal.component.';
 import { Environment } from '../../environment';
 import { FerramentasDaListagem } from '../ferramentas-da-listagem/ferramentasDaListagem.component';
 import { useAppThemeContext } from '../../contexts/themeContext';
-import { CustomNoRowsOverlay } from './noRowsOverlays';
-import { LoadingSkeleton } from './tableLoadSkeleton';
-import { montaAcoes } from './acoesGridHelper';
+import { CustomNoRowsOverlay } from './noRowsOverlays.componenet';
+import { LoadingSkeleton } from './tableLoadSkeleton.componenet';
+import { montaAcoes } from './acoesGridHelper.componenet';
 import { toast } from 'react-toastify';
 import GridContainer from '../../layouts/gridContainer';
+import { BreadCumbComponent } from '../bread-crumbs/bread-crumbs.component';
 
 export const Table = ({
 	columns,
@@ -88,10 +90,11 @@ export const Table = ({
 				if(options?.buscarAoRenderizar){
 					await setLoadGrid(true);
 					await buscarDadosGrid(filtroGrid);
+					await setLoadGrid(false);
 				}
 			} catch (error: any) {
 				toast.error('Erro ao tentar buscar os dados da listagem.');
-				await setLoadGrid(true);
+				await setLoadGrid(false);
 			}
 		}
 		init();
@@ -101,12 +104,31 @@ export const Table = ({
 	useMemo(
 		async () => {
 			if(contRender > 1){
+
 				await buscarDadosGrid(filtroGrid);
 			}
 			setContRender(contRender + 1);
 		},
 		[filtroGrid],
 	);
+	
+	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+	const [textTooltip, setTextTooltip] = useState('');
+	const open = Boolean(anchorEl);
+
+	const handlePopoverOpen = (event: MouseEvent<HTMLElement>) => {
+		const field = event.currentTarget.dataset.field!;
+		if(field != 'actions'){
+			const id = event.currentTarget.parentElement!.dataset.id!;
+			const row = data.find((r:any) => r?.id == id)!;
+			setTextTooltip(row[field]);
+			setAnchorEl(event.currentTarget);
+		}
+	};
+	
+	const handlePopoverClose = () => {
+		setAnchorEl(null);
+	};
 
 	return (
 		<GridContainer>
@@ -130,6 +152,9 @@ export const Table = ({
 						</Typography>
 					</Box>
 				}
+			</Box>
+			<Box>
+				<BreadCumbComponent />
 			</Box>
 			{
 				!options?.ocultarBarraFerramentas &&
@@ -216,8 +241,36 @@ export const Table = ({
 						LoadingOverlay: LoadingSkeleton,
 						NoRowsOverlay: CustomNoRowsOverlay
 					}}
+					componentsProps={{
+						cell: {
+							onMouseEnter: handlePopoverOpen,
+							onMouseLeave: handlePopoverClose,
+						},
+					}}
 					localeText={ptBR.components.MuiDataGrid.defaultProps.localeText}
 				/>
+				{
+					options.enableTooltip &&
+					<Popover
+						sx={{
+							pointerEvents: 'none',
+						}}
+						open={open}
+						anchorEl={anchorEl}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'left',
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'left',
+						}}
+						onClose={handlePopoverClose}
+						disableRestoreFocus
+					>
+						<Typography sx={{ p: 1 }}>{textTooltip}</Typography>
+					</Popover>
+				}
 			</Box>
 			
 			{

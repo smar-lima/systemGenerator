@@ -2,26 +2,22 @@ import { Box, Divider, Fab, Skeleton, Tooltip, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import VoltarIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import { red } from '@mui/material/colors';
 import { IFerramentasDeDetalhesProps } from '../../types/formDados.types';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Environment } from '../../environment';
-import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal';
+import AlertConfimModal from '../modal-alerta-confimacao/alertaConfirmacaoModal.component.';
 import { useState } from 'react';
 
 export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 	textoBotaoNovo = 'Novo',
 	textoBotaoEditar = 'Editar',
-	textoBotaoSalvar,
 	exibeBotaoNovo = false,
-	exibeBotaoSalvar = true,
 	exibeBotaoExcluir = true,
 	exibeBotaoVoltar = true,
 	exibeBotaoEditar = true,
-	onClickSalvar,
 	onClickNovo,
 	onClickVoltar,
 	onClickEditar,
@@ -34,11 +30,6 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
-
-	const { id } = useParams();
-
-	const textoSalvar = textoBotaoSalvar ? textoBotaoSalvar : 
-		prefix === 'I' ? 'Cadastrar' : 'Salvar';
 
 	const onConfirmModalDelete = async () => {
 		const response = await onClickExcluir();
@@ -71,7 +62,7 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 				height={theme.spacing(2)}
 				width={'max-content'}
 			>
-				{(prefix !== 'I' && exibeBotaoExcluir && !loading) && (
+				{(prefix === 'V' && exibeBotaoExcluir && !loading) && (
 					<>
 						<Tooltip title={'Excluir'} placement="top">
 							<Fab 
@@ -83,31 +74,6 @@ export const FerramentasDeDetalhes: React.FC<IFerramentasDeDetalhesProps> = ({
 								<DeleteIcon/>
 							</Fab>
 						</Tooltip>
-					</>
-				)}
-				{loading && (
-					<>
-						<Skeleton width={'40px'} height={'40px'} variant="circular"/>
-						<Divider orientation='vertical'/>
-					</>
-				)}
-				{(exibeBotaoSalvar && !loading && prefix !== 'V') && (
-					console.log('id: ', id),
-					console.log('onClickEditar: ', onClickEditar),
-					<>
-						<Tooltip title={textoSalvar} placement="top">
-							
-							<Fab 
-								size="small" 
-								aria-label="save" 
-								style={{width: '35px', height: '20%'}}
-								//onClick={id ? onClickSalvar : onClickEditar}
-								
-							>
-								<SaveIcon/>
-							</Fab>
-						</Tooltip>
-
 					</>
 				)}
 				{loading && (

@@ -2,18 +2,18 @@ import { toast } from 'react-toastify';
 import { Environment } from '../../../../shared/environment';
 import { trataErrorInCatch } from '../../../../shared/utils/errorHelper';
 import { AppDispatch } from '../../../../store';
-import api from '../service/projeto.api';
-import { resetForm, setProjeto } from './projeto.slice';
+import api from '../service/entidade.api';
+import { resetForm, setEntidade } from './entidade.slice';
 
-export const getProjetoById = async (
+export const getEntidadeById = async (
 	id: any, 
 	dispatch: AppDispatch
 ) => {
 	try {
 		const resp = await api.getById(id);
 		if(resp.status === 200){
-			const newProjeto = resp.data;
-			dispatch(setProjeto(newProjeto));
+			const newEntidade = resp.data;
+			dispatch(setEntidade(newEntidade));
 		}else{
 			history.back();
 			toast.error(Environment.ERRO_AO_BUSCAR);
@@ -23,14 +23,16 @@ export const getProjetoById = async (
 	}
 };
 
-export const createProjeto = async (
+export const createEntidade = async (
 	dto: any, 
 	dispatch: AppDispatch,
 	goTo: any
 ) => {
 	const newDto = {
-		name: dto.name,
-		location: dto.location
+		nome: dto.nome,
+		projeto: dto.projeto,
+		feature: dto.feature,
+		acoes: dto.acoes,
 	};
 
 	try {
@@ -46,7 +48,7 @@ export const createProjeto = async (
 	}
 };
 
-export const updateProjeto = async (
+export const updateEntidade = async (
 	id: any, 
 	dto: any, 
 	dispatch: AppDispatch,
@@ -54,8 +56,10 @@ export const updateProjeto = async (
 ) => {
 	const putDto = {
 		id: dto.id,
-		name: dto.name,
-		location: dto.location
+		nome: dto.nome,
+		projeto: dto.projeto,
+		feature: dto.feature,
+		acoes: dto.acoes,
 	};
 
 	try {
@@ -71,7 +75,7 @@ export const updateProjeto = async (
 	}
 };
 
-export const deleteProjeto = async (id: any) => {
+export const deleteEntidade = async (id: any) => {
 	try {
 		return await api.delete(id);
 	} catch (error: any) {

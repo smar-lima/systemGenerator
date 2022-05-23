@@ -5,12 +5,11 @@ export function Router() {
 	let rotasMapeadas:any = [];
 	const location = useLocation();
 	async function init() {
-		
 		await routes.keys().forEach((Name:string) => {
-	
 			const rotasImportadas = routes(Name).default;
 			rotasMapeadas = [...rotasMapeadas, ...rotasImportadas];
 		});
+		console.log('rotasMapeadas',rotasMapeadas);
 	}
 	init();
 	return useRoutes(rotasMapeadas, location);

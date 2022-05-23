@@ -9,7 +9,7 @@ import {
 import { IFerramentasDeDetalhesProps } from '../../types/formDados.types';
 import { FerramentasDeDetalhes } from '../ferramentas-de-detalhe/ferramentaDetalhe.component';
 import { FormFooterBottons } from '../form-footer-bottons/formFooterBottons.component';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from '../../../store';
 
 interface IForm {
@@ -37,32 +37,20 @@ export const Form: React.FC<IForm> = ({
 
 	const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 	const mdDown = useMediaQuery(theme.breakpoints.down('md'));
-	const [loading, setLoading] = useState(false);
 	const isView = prefix === 'V';
 
 	const prefixTitulo = prefix === 'I' ? 'Cadastro' : prefix === 'E' ? 'Edição' : 'Visualização';
 
 	const newTollbar: IFerramentasDeDetalhesProps = {
 		...toolbar,
-		loading: loading,
 		exibeBotaoNovo: prefix === 'I' ? false : toolbar?.exibeBotaoNovo,
 		onClickNovo: toolbar?.onClickNovo,
-		textoBotaoSalvar: toolbar?.textoBotaoSalvar,
 		onClickVoltar: toolbar?.onClickVoltar,
 		onClickExcluir: toolbar?.onClickExcluir,
 		prefix: prefix
 	};
 	
 	useEffect(() => {
-		/*document.addEventListener('click', e => {
-			if (!e?.target?.closest('.form-container')) return;
-			console.log(e.target);
-		});
-		
-		function clicked() {
-			console.log(1);
-		}*/
-
 		return () => {
 			dispatch(resetForm());
 		};
