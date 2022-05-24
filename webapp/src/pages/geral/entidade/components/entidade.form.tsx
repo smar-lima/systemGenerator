@@ -1,32 +1,32 @@
 import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { resetForm, setProjeto } from '../store/projeto.slice';
+import { resetForm, setEntidade } from '../store/entidade.slice';
 import { useAppDispatch } from '../../../../store';
-import { deleteProjeto, getProjetoById } from '../store/projeto.request';
+import { deleteEntidade, getEntidadeById } from '../store/entidade.request';
 import { useNavigate, useParams } from 'react-router-dom';
 import { YupResolver } from '../../../../shared/hooks/yupResolverDefault';
 import { Grid, TextField } from '@mui/material';
-import { produtoEsquemaValidate } from '../projeto.validate';
+import { entidadeEsquemaValidate } from '../entidade.validate';
 import { Form, updateForm } from '../../../../shared/components/form/form.componenet';
 import { IFerramentasDeDetalhesProps, IPropsForm } from '../../../../shared/types/formDados.types';
 import { useSelector } from 'react-redux';
-import { urBaseEnditade } from '../projeto.route';
+import { urlBaseEntidade } from '../entidade.route';
 
-export const ProjetoForm: FC<IPropsForm> = ({
+export const EntidadeForm: FC<IPropsForm> = ({
 	onSubmit,
 	prefix
 }) => {
 
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const projeto = useSelector((state: any) => state.projeto);
+	const entidade = useSelector((state: any) => state.entidade);
 	const { id } = useParams();
 	const isView = prefix === 'V';
 	
 	useEffect(() => {
 		async function init() {
 			if (prefix === 'E' || prefix === 'V')
-				await getProjetoById(id, dispatch);
+				await getEntidadeById(id, dispatch);
 		}
 		init();
 	},[]);
@@ -36,31 +36,31 @@ export const ProjetoForm: FC<IPropsForm> = ({
 		formState: { errors },
 		setValue
 	} = useForm({
-		defaultValues: useSelector((state: any) => state.projeto),
-		resolver: YupResolver(produtoEsquemaValidate)
+		defaultValues: useSelector((state: any) => state.entidade),
+		resolver: YupResolver(entidadeEsquemaValidate)
 	});
 
 	useMemo(() => {
-		updateForm(projeto, setValue);
-	},[projeto]);
+		updateForm(entidade, setValue);
+	},[entidade]);
 
 	const onChange = async (data: any) => {
-		await dispatch(setProjeto(data));
+		await dispatch(setEntidade(data));
 	};
 
 	const toolbarForm: IFerramentasDeDetalhesProps = {
 		exibeBotaoNovo: true,
-		urlListagem: urBaseEnditade,
-		onClickNovo: () => navigate(`${urBaseEnditade}/add`),
-		onClickExcluir: () => deleteProjeto(id),
-		onClickEditar: () =>  navigate(`${urBaseEnditade}/edit/${id}`),
+		urlListagem: urlBaseEntidade,
+		onClickNovo: () => navigate(`${urlBaseEntidade}/add`),
+		onClickExcluir: () => deleteEntidade(id),
+		onClickEditar: () =>  navigate(`${urlBaseEntidade}/edit/${id}`),
 	};
 	
 	return (
 		<>
 			<Form
 				onSubmit={handleSubmit(onSubmit)}
-				titulo={'Projeto'}
+				titulo={'Entidade'}
 				prefix={prefix}
 				toolbar={toolbarForm}
 				resetForm={resetForm}
@@ -69,32 +69,48 @@ export const ProjetoForm: FC<IPropsForm> = ({
 					<TextField
 						label='Nome*'
 						variant='standard'
-						value={projeto.name}
+						value={entidade.nome}
 						disabled={isView}
 						onChange={(e) => onChange({
-							...projeto,
-							name:e.target.value
+							...entidade,
+							nome:e.target.value
 						})}
-						error={errors.name}
+						error={errors.nome}
 						helperText={
-							errors.name?.message
+							errors.nome?.message
 						}
 						
 					/>
 				</Grid>
 				<Grid item xs={6}>
 					<TextField
-						label='Endereço*'
+						label='Projeto*'
 						variant='standard'
-						value={projeto.location}
+						value={entidade.projeto}
 						disabled={isView}
 						onChange={(e) => onChange({
-							...projeto,
-							location:e.target.value
+							...entidade,
+							projeto:e.target.value
 						})}
-						error={errors.location}
+						error={errors.projeto}
 						helperText={
-							errors.location?.message
+							errors.projeto?.message
+						}
+					/>
+				</Grid>
+				<Grid item xs={6}>
+					<TextField
+						label='Feature*'
+						variant='standard'
+						value={entidade.feature}
+						disabled={isView}
+						onChange={(e) => onChange({
+							...entidade,
+							feature:e.target.value
+						})}
+						error={errors.feature}
+						helperText={
+							errors.feature?.message
 						}
 					/>
 				</Grid>

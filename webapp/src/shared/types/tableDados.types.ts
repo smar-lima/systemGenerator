@@ -16,6 +16,7 @@ interface IOptionsProps {
 	ocultarBarraFerramentas?: boolean;
 	buscarAoRenderizar?: boolean;
 	selected?: boolean;
+	enableTooltip?: boolean;
 }
 
 interface IBtnFixedToolbarProps {

@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import  {Table}  from '../../../../shared/components/table/table';
+import  {Table}  from '../../../../shared/components/table/table.component';
+import { urBaseEnditade } from '../projeto.route';
 import GridProjetoDDados from '../projeto.table.ddados';
 import api from '../service/projeto.api';
 import { deleteProjeto } from '../store/projeto.request';
-
-const urlBase = '/app/geral/projeto';
+import ListIcon from '@mui/icons-material/List';
 
 export const ProjetoGrid: React.FC = () => {
 
@@ -17,18 +17,24 @@ export const ProjetoGrid: React.FC = () => {
 	const actions = [
 		{
 			type: 'visualizar',
-			onClick: (id: number) => navigate(`${urlBase}/view/${id}`),
-			url: `${urlBase}/view/:id`,
+			onClick: (id: number) => navigate(`${urBaseEnditade}/view/${id}`),
+			url: `${urBaseEnditade}/view/:id`,
 		},
 		{
 			type: 'editar',
-			onClick: (id: number) => navigate(`${urlBase}/edit/${id}`),
-			url: `${urlBase}/edit/:id`,
+			onClick: (id: number) => navigate(`${urBaseEnditade}/edit/${id}`),
+			url: `${urBaseEnditade}/edit/:id`,
 		},
 		{
 			type: 'deletar',
 			onClick: (id: number)=> deleteProjeto(id),
-			url: `${urlBase}/delete/:id`,
+			url: `${urBaseEnditade}/delete/:id`,
+		},
+		{
+			label: 'Entidades',
+			onClick: (id: number) => navigate(`${urBaseEnditade}/${id}/entidade`),
+			url: `${urBaseEnditade}/:idProjeto/entidade`,
+			icon: <ListIcon />
 		},
 	];
 
@@ -37,14 +43,14 @@ export const ProjetoGrid: React.FC = () => {
 		service: api.getAll,
 		ocultarBarraFerramentas: false,
 		buscarAoRenderizar: true,
-		selected: true,
+		selected: true
 	};
 
 	const toolbar = {
 		exibirAtualizar: true,
 		novo: {
-			onClick: () => navigate(`${urlBase}/add`),
-			route: `${urlBase}/add`,
+			onClick: () => navigate(`${urBaseEnditade}/add`),
+			route: `${urBaseEnditade}/add`,
 		},
 	};
 

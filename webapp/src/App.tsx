@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 
 import { MenuLateral } from './shared/components/menu-lateral/menuLateral.component.';
 import { AppDrawerProvider } from './shared/contexts/drawerContext';
@@ -8,6 +7,7 @@ import { AppThemeProvider } from './shared/contexts/themeContext';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 export const App = () => {
+
 	return (
 		<AppThemeProvider>
 			<AppDrawerProvider>

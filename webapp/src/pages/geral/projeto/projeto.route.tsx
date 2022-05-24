@@ -4,33 +4,37 @@ import RouteType from '../../../shared/types/route.types';
 import { ProjetoEdit } from './container/projeto.edit';
 import { ProjetoView } from './container/projeto.view';
 
-const base = '/app/geral/projeto';
+export const urBaseEnditade = '/app/geral/projeto';
 
 const routes: Array<RouteType> = [
 	{
 		name: 'app.geral.projeto',
-		path: `${base}`,
+		path: `${urBaseEnditade}`,
+		key: `${urBaseEnditade}`,
 		accessControl: false,
 		element: <ProjetoList />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projetos' }],
 	},
 	{
 		name: 'app.geral.projeto.add',
-		path: `${base}/add`,
+		path: `${urBaseEnditade}/add`,
+		key: `${urBaseEnditade}/add`,
 		accessControl: false,
 		element: <ProjetoNew />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' },{ text: 'Inclusão' }],
 	}, 
 	{
 		name: 'app.geral.projeto.edit',
-		path: `${base}/edit/:id`,
+		path: `${urBaseEnditade}/edit/:id`,
+		key: `${urBaseEnditade}/edit/:id`,
 		accessControl: false,
 		element: <ProjetoEdit />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' },{ text: 'Edição' }]
 	},
 	{
 		name: 'app.geral.projeto.view',
-		path: `${base}/view/:id`,
+		path: `${urBaseEnditade}/view/:id`,
+		key: `${urBaseEnditade}/view/:id`,
 		accessControl: false,
 		element: <ProjetoView />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' },{ text: 'Visualização' }],

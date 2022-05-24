@@ -32,26 +32,14 @@ namespace Application.Services
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
-            var projects = new List<Project>();
-
-            await Task.Delay(500).ContinueWith(async (t) =>
-            {
-                projects = _projectRepository.GetAllReadOnly().ToList();
-            }, cancellationToken);
+            var projects  = _projectRepository.GetAllReadOnly().ToList();
 
             return projects;
         }
 
         public async Task<Project> Get(long id)
         {
-            var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = cancellationTokenSource.Token;
-
-            var project = new Project("m","m");
-            await Task.Delay(500).ContinueWith(async (t) =>
-            {
-                project = await _projectRepository.GetByIdAsync(id);
-            }, cancellationToken);
+            var project = await _projectRepository.GetByIdAsync(id);
 
             return project;
         }

@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { FC } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 //importa todos os arquivos Slices
 import { slices } from '../shared/imports';
