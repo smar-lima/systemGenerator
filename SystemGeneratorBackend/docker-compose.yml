@@ -12,15 +12,15 @@ services:
         - '5533:5533'
         - '5534:5534'
 
-  #webapp:
-  #  image: node:14.18.1-alpine
-  #  build:
-  #    context: .
-  #    dockerfile: chatbotwebapp/Dockerfile
-  #  depends_on:
-  #      - systemgeneratorbackend
-  #  ports:
-  #      - '3000:3000'
+  webapp:
+   image: node:16.14.2-alpine
+   build:
+     context: ../
+     dockerfile: webapp/Dockerfile
+   depends_on:
+       - systemgeneratorbackend
+   ports:
+       - '3000:3000'
 
   pdb:
     image: postgres:alpine
