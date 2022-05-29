@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import  {Table}  from '../../../../shared/components/table/table.component';
-import { urlBaseEntidade } from '../entidade.route';
+import { urlBase } from '../entidade.route';
 import GridEntidadeDDados from '../entidade.table.ddados';
 import api from '../service/entidade.api';
 import { deleteEntidade } from '../store/entidade.request';
@@ -16,18 +16,18 @@ export const EntidadeGrid: React.FC = () => {
 	const actions = [
 		{
 			type: 'visualizar',
-			onClick: (id: number) => navigate(`${urlBaseEntidade}/view/${id}`),
-			url: `${urlBaseEntidade}/view/:id`,
+			onClick: (id: number) => navigate(`${urlBase}/view/${id}`),
+			url: `${urlBase}/view/:id`,
 		},
 		{
 			type: 'editar',
-			onClick: (id: number) => navigate(`${urlBaseEntidade}/edit/${id}`),
-			url: `${urlBaseEntidade}/edit/:id`,
+			onClick: (id: number) => navigate(`${urlBase}/edit/${id}`),
+			url: `${urlBase}/edit/:id`,
 		},
 		{
 			type: 'deletar',
 			onClick: (id: number)=> deleteEntidade(id),
-			url: `${urlBaseEntidade}/delete/:id`,
+			url: `${urlBase}/delete/:id`,
 		},
 	];
 
@@ -42,8 +42,8 @@ export const EntidadeGrid: React.FC = () => {
 	const toolbar = {
 		exibirAtualizar: true,
 		novo: {
-			onClick: () => navigate(`${urlBaseEntidade}/add`),
-			route: `${urlBaseEntidade}/add`,
+			onClick: () => navigate(`${urlBase}/add`),
+			route: `${urlBase}/add`,
 		},
 	};
 

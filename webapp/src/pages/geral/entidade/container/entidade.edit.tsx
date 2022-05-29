@@ -2,7 +2,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../store';
 import { EntidadeForm } from '../components/entidade.form';
-import { urlBaseEntidade } from '../entidade.route';
+import { urlBase } from '../entidade.route';
 import { updateEntidade } from '../store/entidade.request';
 
 export const EntidadeEdit: React.FC = () => {
@@ -10,7 +10,7 @@ export const EntidadeEdit: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const onSubmit = (dados: any) => {
-		updateEntidade(id, dados, dispatch, navigate(urlBaseEntidade));
+		updateEntidade(id, dados, dispatch, navigate(urlBase));
 	};
 
 	return <EntidadeForm onSubmit={onSubmit} prefix='E' />;

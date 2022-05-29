@@ -10,14 +10,16 @@ import { routes } from '../../imports';
 
 const breadCrumbsGerados = () => {
 	let rotasImportadas: any = [];
+	
 	routes.keys().forEach((Name:string) => {
 	
 		rotasImportadas = routes(Name).default;
 	});
 	const breadCrumbs: any = [];
 	rotasImportadas.map((item: any) => {
-		breadCrumbs.push({route: item.path, breadCrumb: item.breadCrumb});
+		breadCrumbs.push({route: item.path, breadCrumb: item.breadCrumb}); 
 	}); 
+	
 	return breadCrumbs;
 };
 
@@ -30,44 +32,61 @@ const LinkRouter = (props: LinkRouterProps) => (
 	<Link {...props} component={RouterLink as any} />
 );
 
+const retornaUrlSemParams = (string: string) => {
+	const arrayUrl = string.split('/');
+	const arrayUrlTratada: any  = [];
+	arrayUrl.map((item, index) => {
+		if(index != 0 && item.charAt(0) != ':')
+			arrayUrlTratada.push(item);
+	});
+	const urlConcat = arrayUrlTratada.join('/');
+	return urlConcat;
+};
+
+const retornaUrlSemNumbers = (string: string) => {
+	const arrayUrl = string.split('/');
+	const arrayUrlTratada: any  = [];
+	arrayUrl.map((item: any) => {
+		if(isNaN(item))
+			arrayUrlTratada.push(item);
+	});
+	const urlConcat = arrayUrlTratada.join('/');
+	return urlConcat;
+};
+
 export const BreadCumbComponent = () => {
 	const location = useLocation();
 
 	const breadCrumbs = breadCrumbsGerados();
+	console.log('breadCrumbs: ', breadCrumbs);
 
 	const breadCrumbDaRotaAtual = breadCrumbs.filter((x: any) => x.route == location.pathname)[0];
+	const pathNameTratado = retornaUrlSemNumbers(location.pathname);
 
-	console.log('breadCrumbDaRotaAtual: ', breadCrumbDaRotaAtual);
-	const arrayQuebradoDaRotaAtual = location.pathname.split('/').filter((x:any) => x);
-	const ultimoItemDaRotaAtual = arrayQuebradoDaRotaAtual[arrayQuebradoDaRotaAtual.length - 1];
 	return (
 		<Breadcrumbs aria-label="breadcrumb">
 			<LinkRouter underline="hover" color="inherit" to="/app">
           Home
 			</LinkRouter>
             
-			{breadCrumbDaRotaAtual.breadCrumb.map( (value: any, index: any) => {
+			{breadCrumbDaRotaAtual?.breadCrumb?.map( (value: any, index: any) => {
 				const last = index === breadCrumbDaRotaAtual.breadCrumb.length - 1;
 
 				const breadCrumbRotaAtualSelecionado = breadCrumbs.filter(function(item : any){
-					const splitRotaDoItemAtualDoMap = item.route.split('/').filter((x:any) => x);
-					const ultimaParteRotaAtualDoMap = splitRotaDoItemAtualDoMap[splitRotaDoItemAtualDoMap.length - 1];
-					return ultimaParteRotaAtualDoMap === ultimoItemDaRotaAtual;
-				});
+					const pathRotaBradCrumbSemParams = retornaUrlSemParams(item.route);
+					return pathRotaBradCrumbSemParams === pathNameTratado;
+				}); 
 				
-				console.log('value: ', value.text);
-				console.log('breadCrumbRotaAtualSelecionado: ', breadCrumbRotaAtualSelecionado);
-
 				return last ? (
-					<Typography style={{color: '#ffffff', fontWeight: 500}} key={breadCrumbRotaAtualSelecionado.length > 0 ? breadCrumbRotaAtualSelecionado[0]?.route : ''}>
+					<Typography style={{color: '#ffffff', fontWeight: 500}} key={breadCrumbRotaAtualSelecionado ? breadCrumbRotaAtualSelecionado.route : ''}>
 						{value.text}
 					</Typography>
 				) : breadCrumbRotaAtualSelecionado.length > 0 ? (
-					<Typography style={{color: '#ffffff', fontWeight: 500}}  key={breadCrumbRotaAtualSelecionado.length > 0 ? breadCrumbRotaAtualSelecionado[0]?.route : ''}>
+					<Typography style={{color: '#ffffff', fontWeight: 500}}  key={breadCrumbRotaAtualSelecionado ? breadCrumbRotaAtualSelecionado.route : ''}>
 						{value.text}
 					</Typography>
 				) : (
-					<LinkRouter underline="hover" style={{color: '#ffffff', fontWeight: 500}} to={breadCrumbRotaAtualSelecionado.length > 0 ? breadCrumbRotaAtualSelecionado[0]?.route : ''} key={breadCrumbRotaAtualSelecionado.length > 0 ? breadCrumbRotaAtualSelecionado[0]?.route : ''}>
+					<LinkRouter underline="hover" style={{color: '#ffffff', fontWeight: 500}} to={breadCrumbRotaAtualSelecionado ? breadCrumbRotaAtualSelecionado.route : ''} key={breadCrumbRotaAtualSelecionado ? breadCrumbRotaAtualSelecionado.route : ''}>
 						{value.text}
 					</LinkRouter>
 				);

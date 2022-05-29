@@ -10,7 +10,7 @@ import { entidadeEsquemaValidate } from '../entidade.validate';
 import { Form, updateForm } from '../../../../shared/components/form/form.componenet';
 import { IFerramentasDeDetalhesProps, IPropsForm } from '../../../../shared/types/formDados.types';
 import { useSelector } from 'react-redux';
-import { urlBaseEntidade } from '../entidade.route';
+import { urlBase } from '../entidade.route';
 
 export const EntidadeForm: FC<IPropsForm> = ({
 	onSubmit,
@@ -50,10 +50,10 @@ export const EntidadeForm: FC<IPropsForm> = ({
 
 	const toolbarForm: IFerramentasDeDetalhesProps = {
 		exibeBotaoNovo: true,
-		urlListagem: urlBaseEntidade,
-		onClickNovo: () => navigate(`${urlBaseEntidade}/add`),
+		urlListagem: urlBase,
+		onClickNovo: () => navigate(`${urlBase}/add`),
 		onClickExcluir: () => deleteEntidade(id),
-		onClickEditar: () =>  navigate(`${urlBaseEntidade}/edit/${id}`),
+		onClickEditar: () =>  navigate(`${urlBase}/edit/${id}`),
 	};
 	
 	return (

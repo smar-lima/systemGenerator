@@ -4,41 +4,41 @@ import RouteType from '../../../shared/types/route.types';
 import { EntidadeEdit } from './container/entidade.edit';
 import { EntidadeView } from './container/entidade.view';
 
-export const urlBaseEntidade = '/app/geral/projeto/:idProjeto/entidade';
+export const urlBase = '/app/geral/projeto/:idProjeto/entidade';
 
-const routes: Array<RouteType> = [
+const entidadeRoutes: Array<RouteType> = [
 	{
 		name: 'app.geral.projeto.entidade',
-		path: `${urlBaseEntidade}`,
-		key: `${urlBaseEntidade}`,
+		path: `${urlBase}`,
+		key: `${urlBase}`,
 		accessControl: false,
 		element: <EntidadeList />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' }, { text: 'Entidades' }],
 	},
 	{
 		name: 'app.geral.projeto.entidade.add',
-		path: `${urlBaseEntidade}/add`,
-		key: `${urlBaseEntidade}/add`,
+		path: `${urlBase}/add`,
+		key: `${urlBase}/add`,
 		accessControl: false,
 		element: <EntidadeNew />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' }, { text: 'Entidade' },{ text: 'Inclusão' }],
 	}, 
 	{
 		name: 'app.geral.projeto.entidade.edit',
-		path: `${urlBaseEntidade}/edit/:id`,
-		key: `${urlBaseEntidade}/edit/:id`,
+		path: `${urlBase}/edit/:id`,
+		key: `${urlBase}/edit/:id`,
 		accessControl: false,
 		element: <EntidadeEdit />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' }, { text: 'Entidade' },{ text: 'Edição' }]
 	},
 	{
 		name: 'app.geral.projeto.entidade.view',
-		path: `${urlBaseEntidade}/view/:id`,
-		key: `${urlBaseEntidade}/view/:id`,
+		path: `${urlBase}/view/:id`,
+		key: `${urlBase}/view/:id`,
 		accessControl: false,
 		element: <EntidadeView />,
 		breadCrumb: [{ text: 'Geral' }, { text: 'Projeto' }, { text: 'Entidade' },{ text: 'Visualização' }],
 	},
 ];
 
-export default routes;
+export default entidadeRoutes;

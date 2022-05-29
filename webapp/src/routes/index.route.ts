@@ -9,7 +9,6 @@ export function Router() {
 			const rotasImportadas = routes(Name).default;
 			rotasMapeadas = [...rotasMapeadas, ...rotasImportadas];
 		});
-		console.log('rotasMapeadas',rotasMapeadas);
 	}
 	init();
 	return useRoutes(rotasMapeadas, location);

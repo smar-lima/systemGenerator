@@ -6,7 +6,7 @@ import { ProjetoView } from './container/projeto.view';
 
 export const urBaseEnditade = '/app/geral/projeto';
 
-const routes: Array<RouteType> = [
+const projetoRoutes: Array<RouteType> = [
 	{
 		name: 'app.geral.projeto',
 		path: `${urBaseEnditade}`,
@@ -41,4 +41,4 @@ const routes: Array<RouteType> = [
 	},
 ];
 
-export default routes;
+export default projetoRoutes;

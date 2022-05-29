@@ -39,7 +39,7 @@ export const Table = ({
 	const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
 	const [itemToDelete, setItemToDelete] = useState<any>();
 	const { themeName } = useAppThemeContext();
-	const [filtroGrid, setFiltroGrid] = useState({page:0,pageSize:10,filter:{}});
+	const [filtroGrid, setFiltroGrid] = useState({page:0,pageSize:10,filter:{}, order});
 
 	const onConfirmModalDelete = async () => {
 		await itemToDelete.actionDelete(itemToDelete.id).then(async (response:any) => {
@@ -198,6 +198,8 @@ export const Table = ({
 					onPageChange={(newPage) => setFiltroGrid({...filtroGrid, page:newPage})}
 					onPageSizeChange={(newPageSize) => setFiltroGrid({...filtroGrid, pageSize:newPageSize})}
 					pagination
+					sortingMode="server"
+					onSortModelChange={(newOrder) => setFiltroGrid({...filtroGrid, order:newOrder})}
 					page={filtroGrid.page}
 					pageSize={filtroGrid.pageSize}
 					initialState={{
