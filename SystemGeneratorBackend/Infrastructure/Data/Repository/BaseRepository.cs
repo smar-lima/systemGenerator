@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Models.General;
 using Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
